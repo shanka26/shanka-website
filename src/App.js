@@ -452,7 +452,6 @@ let aboutStyle= {
           <Stack direction='row' gap={2} justifyContent='center'>
             <Fab sx={fabStyle} size='medium' component={Link} href='https://twitter.com/Shanka26/' target="_blank" rel="noopener"><TwitterIcon/></Fab>
             <Fab sx={fabStyle} size='medium'  component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab>
-            <Fab sx={fabStyle} size='medium' component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab>
             </Stack>
 
             <Box mx={{xs:4,sm:8,md:16,lg:24}} my={2} >
