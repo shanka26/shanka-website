@@ -2,7 +2,6 @@ import React, {useState,useEffect,useRef}  from 'react'
 
 import {Box, Button, Fab, Link, Grid, Stack, TextField, Typography} from '@mui/material'
 import Header from './components/Header'
-import RedditIcon from '@mui/icons-material/Reddit';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Footer from './components/Footer';
@@ -380,7 +379,8 @@ let aboutStyle= {
 
           <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']} link="https://www.cubeplex.shop/"
+              <Project title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']}
+              //  link="https://www.cubeplex.shop/"
               description='E-Commerce website for The Cubeplex'/>
             </Grid>
           </Slide>
@@ -397,14 +397,16 @@ let aboutStyle= {
 
           <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Lazy Irrigation" image={lazyPotScreen} tags={['Shopify','E-Commerce','Design']} link="https://irrigationpots.myshopify.com/"
+              <Project title="Lazy Irrigation" image={lazyPotScreen} tags={['Shopify','E-Commerce','Design']} 
+              // link="https://irrigationpots.myshopify.com/"
               description='Shopify E-Comerce website for Lazy Irrigation Pots'/>
             </Grid>
           </Slide>
 
           <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Eternally Bonded" image={eternallyBondedScreen} tags={['Shopify','E-Commerce','Design']} link="https://eternally-bonded-rings.myshopify.com/"
+              <Project title="Eternally Bonded" image={eternallyBondedScreen} tags={['Shopify','E-Commerce','Design']} 
+              // link="https://eternally-bonded-rings.myshopify.com/"
               description='Shopify E-Comerce website for matching ring sets'/>
             </Grid>
           </Slide>
@@ -449,9 +451,8 @@ let aboutStyle= {
 
           <Stack direction='row' gap={2} justifyContent='center'>
             <Fab sx={fabStyle} size='medium' component={Link} href='https://twitter.com/Shanka26/' target="_blank" rel="noopener"><TwitterIcon/></Fab>
-            <Fab sx={fabStyle} size='medium'  component={Link} href='https://www.reddit.com/user/MinisterShanka' target="_blank" rel="noopener"><RedditIcon/></Fab>
             <Fab sx={fabStyle} size='medium'  component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab>
-            {/* <Fab sx={fabStyle} size='medium' component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab> */}
+            <Fab sx={fabStyle} size='medium' component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab>
             </Stack>
 
             <Box mx={{xs:4,sm:8,md:16,lg:24}} my={2} >
