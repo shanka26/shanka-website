@@ -502,7 +502,7 @@ let aboutStyle= {
 
           <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project index={3} title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']} badge="No longer for sale"
+              <Project index={3} title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']} badge="Checkout disabled"
                link="https://cubeplex.netlify.app/"
               description='E-Commerce website for The Cubeplex'/>
             </Grid>
