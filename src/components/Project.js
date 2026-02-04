@@ -28,6 +28,7 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
     const mobileOverlayBg = imageFit === 'contain'
         ? 'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.0))'
         : 'linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05))';
+    const forceOverlayBg = 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))';
 
     const style = {
         width:{xs:340,md:380},
@@ -142,7 +143,7 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
                             transition:'opacity 220ms ease, transform 220ms ease',
                             background: (canHover && !forceOverlay)
                                 ? 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))'
-                                : mobileOverlayBg,
+                                : (forceOverlay ? forceOverlayBg : mobileOverlayBg),
                             borderRadius:1,
                             pointerEvents: (canHover && !forceOverlay) ? 'none' : 'auto',
                         }}
