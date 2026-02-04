@@ -16,6 +16,7 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
     const size_theme = useTheme()
     const md_up = useMediaQuery(size_theme.breakpoints.up('md'));
     const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
+    const forceOverlay = useMediaQuery(size_theme.breakpoints.down('md'));
     const offsetY = md_up ? (index % 2 === 0 ? 0 : 16) : 0;
     const defaultMedia = { xs: { w: 320, h: 270 }, md: { w: 340, h: 300 } };
     const mediaW = md_up
@@ -50,7 +51,7 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
             filter:'brightness(0.6)',
             transform:'scale(1.02)',
         },
-        ...(canHover ? {
+        ...(canHover && !forceOverlay ? {
             '&:hover .project-overlay':{
                 opacity:1,
                 transform:'translateY(0)',
@@ -136,14 +137,14 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
                             alignItems:'center',
                             textAlign:'center',
                             px:2,
-                            opacity: canHover ? 0 : 1,
-                            transform: canHover ? 'translateY(10px)' : 'translateY(0)',
+                            opacity: (canHover && !forceOverlay) ? 0 : 1,
+                            transform: (canHover && !forceOverlay) ? 'translateY(10px)' : 'translateY(0)',
                             transition:'opacity 220ms ease, transform 220ms ease',
-                            background: canHover
+                            background: (canHover && !forceOverlay)
                                 ? 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))'
                                 : mobileOverlayBg,
                             borderRadius:1,
-                            pointerEvents: canHover ? 'none' : 'auto',
+                            pointerEvents: (canHover && !forceOverlay) ? 'none' : 'auto',
                         }}
                     >
                         <Typography variant='body1' color='secondary.light' align ='center' fontSize={{xs:14,md:16}} sx={{mb:2, textShadow:'0 2px 8px rgba(0,0,0,0.45)'}}>
