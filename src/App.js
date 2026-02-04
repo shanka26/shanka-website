@@ -125,7 +125,7 @@ function App() {
   let viewStyle = {
     color:'primary.main',
     fontSize:{xs:28,md:36,lg:52},
-    cursor:'pointer',
+    cursor: canHover ? 'pointer' : 'default',
     position:'relative',
     display:'inline-block',
     paddingInline:'0.12em',
@@ -135,15 +135,17 @@ function App() {
     backgroundSize:'0% 100%',
     backgroundPosition:'0 100%',
     transition:'background-size 250ms ease, color 250ms ease, text-shadow 250ms ease, transform 150ms ease',
-    animation: reduceMotion ? 'none' : `${glowCue} 3.8s ease-in-out infinite`,
+    animation: (reduceMotion || !canHover) ? 'none' : `${glowCue} 3.8s ease-in-out infinite`,
     willChange:'text-shadow',
-    '&:hover':{
-      color:'primary.light',
-      backgroundSize:'120% 100%',
-      textShadow:'0 0 10px rgba(158,238,238,0.35)',
-      transform:'translateY(-1px)',
-      animationPlayState:'paused',
-    },
+    ...(canHover ? {
+      '&:hover':{
+        color:'primary.light',
+        backgroundSize:'120% 100%',
+        textShadow:'0 0 10px rgba(158,238,238,0.35)',
+        transform:'translateY(-1px)',
+        animationPlayState:'paused',
+      },
+    } : {}),
     
   }
 
@@ -371,7 +373,12 @@ let aboutStyle= {
                    setJobExit(DEFAULT_EXIT)
                    setJobView(false)
                  }}
-                sx={{pl:1,...viewStyle, animationDelay:'2.0s', animation: reduceMotion ? 'none' : `${glowCueSoft} 3.8s ease-in-out infinite`}}>web developer</Typography>
+                sx={{
+                  pl:1,
+                  ...viewStyle,
+                  animationDelay:'2.0s',
+                  animation: (reduceMotion || !canHover) ? 'none' : `${glowCueSoft} 3.8s ease-in-out infinite`,
+                }}>web developer</Typography>
               </Typography>
 
               {canHover && (
