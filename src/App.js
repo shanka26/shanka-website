@@ -482,6 +482,16 @@ let aboutStyle= {
             </Grid>
           </Slide>
 
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
+            <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
+            
+            <Project index={4} title="Guidedly" image={guidedlyScreen}
+             tags={['React','design']} link='https://guidedly.netlify.app/'
+              description='Guidedly is an online meditation timer that uses speech to to text to create a guided meditation with your own mantras.'/>
+            
+            </Grid>
+          </Slide>
+
           <Slide direction="up" in={projectInView}  container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
               <Project index={1} title='Pomonoto' image={pomonotoScreen} tags={['React','Django', 'User Authentication']} link="https://pomonoto.netlify.app/"
@@ -504,15 +514,7 @@ let aboutStyle= {
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
-            <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-            
-            <Project index={4} title="Guidedly" image={guidedlyScreen}
-             tags={['React','design']} link='https://guidedly.netlify.app/'
-              description='Guidedly is an online meditation timer that uses speech to to text to create a guided meditation with your own mantras.'/>
-            
-            </Grid>
-          </Slide>
+          
 
           {/* <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
