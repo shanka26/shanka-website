@@ -17,6 +17,9 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
     const md_up = useMediaQuery(size_theme.breakpoints.up('md'));
     const canHover = useMediaQuery('(hover: hover)');
     const offsetY = md_up ? (index % 2 === 0 ? 0 : 16) : 0;
+    const mobileOverlayBg = imageFit === 'contain'
+        ? 'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.0))'
+        : 'linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05))';
 
     const style = {
         width:{xs:340,md:380},
@@ -129,12 +132,12 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
                             transition:'opacity 220ms ease, transform 220ms ease',
                             background: canHover
                                 ? 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))'
-                                : 'linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05))',
+                                : mobileOverlayBg,
                             borderRadius:1,
                             pointerEvents: canHover ? 'none' : 'auto',
                         }}
                     >
-                        <Typography variant='body1' color='secondary.light' align ='center' fontSize={{xs:14,md:16}} sx={{mb:2}}>
+                        <Typography variant='body1' color='secondary.light' align ='center' fontSize={{xs:14,md:16}} sx={{mb:2, textShadow:'0 2px 8px rgba(0,0,0,0.45)'}}>
                             {description}
                         </Typography>
                         <Stack direction='row' spacing={1} useFlexGap flexWrap='wrap' justifyContent='center'>

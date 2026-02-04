@@ -556,9 +556,6 @@ let aboutStyle= {
 
 
 
-
-
-
       <Box  ref = {contactRef} 
       pt={{xs:2,sm:4,md:8,lg:12}} pb={4} sx={{ height:1}}>
         
