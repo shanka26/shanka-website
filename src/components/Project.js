@@ -127,7 +127,9 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
                             opacity: canHover ? 0 : 1,
                             transform: canHover ? 'translateY(10px)' : 'translateY(0)',
                             transition:'opacity 220ms ease, transform 220ms ease',
-                            background:'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))',
+                            background: canHover
+                                ? 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))'
+                                : 'linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05))',
                             borderRadius:1,
                             pointerEvents: canHover ? 'none' : 'auto',
                         }}
