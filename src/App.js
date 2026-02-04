@@ -502,7 +502,7 @@ let aboutStyle= {
 
           <Slide direction="up" in={projectInView}  container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project index={2} title="D'Core Paperie" image={dcoreScreen} tags={['React','Design']} link="https://www.dcorepaperie.com/"
+              <Project index={2} title="D'Core Paperie" image={dcoreScreen} tags={['React','Design']} link="https://dcore.netlify.app/"
               description='Website for local paperie business showcasing their services and all other pertinent information'/>
             </Grid>
           </Slide>
