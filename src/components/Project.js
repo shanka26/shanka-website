@@ -12,11 +12,18 @@ import { useTheme } from '@mui/material/styles';
 
 
 
-const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cover'}) => {
+const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cover',mediaSize}) => {
     const size_theme = useTheme()
     const md_up = useMediaQuery(size_theme.breakpoints.up('md'));
     const canHover = useMediaQuery('(hover: hover)');
     const offsetY = md_up ? (index % 2 === 0 ? 0 : 16) : 0;
+    const defaultMedia = { xs: { w: 320, h: 270 }, md: { w: 340, h: 300 } };
+    const mediaW = md_up
+        ? (mediaSize?.md?.w ?? defaultMedia.md.w)
+        : (mediaSize?.xs?.w ?? defaultMedia.xs.w);
+    const mediaH = md_up
+        ? (mediaSize?.md?.h ?? defaultMedia.md.h)
+        : (mediaSize?.xs?.h ?? defaultMedia.xs.h);
     const mobileOverlayBg = imageFit === 'contain'
         ? 'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.0))'
         : 'linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05))';
@@ -63,8 +70,8 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
             <Grid container item alignItems='center' justifyContent='center' sx={{px:2,pb:2,flexGrow:1}}>
                 <Box
                     position='relative'
-                    width={md_up ? 340 : 320}
-                    height={md_up ? 300 : 270}
+                    width={mediaW}
+                    height={mediaH}
                     display='flex'
                     alignItems='center'
                     justifyContent='center'

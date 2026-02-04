@@ -477,7 +477,8 @@ let aboutStyle= {
 
           <Slide direction="up" in={projectInView} container={slideRef.current}timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4}  justifyContent='center'>
-              <Project index={0} title="AI Trading Journal" image={aiTradingJournalScreen} tags={['React','AI Integration','Analytics']} link="https://trade-drop.vercel.app/" badge="Beta" imageFit="contain"
+              <Project index={0} title="AI Trading Journal" image={aiTradingJournalScreen} tags={['React','AI Integration','Analytics']} link="https://trade-drop.vercel.app/" badge="Beta"
+              mediaSize={{xs:{w:320,h:210}, md:{w:340,h:226}}}
               description='AI-powered trading journal that logs trades, tags setups, and surfaces patterns with automated insights.'/>
             </Grid>
           </Slide>
