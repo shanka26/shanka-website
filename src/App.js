@@ -4,6 +4,7 @@ import {Box, Button, Fab, Link, Grid, Stack, TextField, Typography} from '@mui/m
 import Header from './components/Header'
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Footer from './components/Footer';
 import Project from './components/Project';
 import { send } from '@emailjs/browser';
@@ -15,8 +16,9 @@ import guidedlyScreen from './res/guidedlyMock.jpg'
 import seoCert from './res/hubspotCertweb.webp'
 import lazyPotScreen from './res/lazypot.webp'
 import eternallyBondedScreen from './res/eternallyBonded.webp'
+import aiTradingJournalScreen from './res/tradeDropScreen.png'
 // import styled from "styled-components";
-import { styled } from '@mui/system';
+import { styled, keyframes } from '@mui/system';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -27,16 +29,22 @@ function App() {
   const size_theme = useTheme()
   const lg_up = useMediaQuery(size_theme.breakpoints.up('lg'));
   const xs_up = useMediaQuery(size_theme.breakpoints.up('xs'));
+  const canHover = useMediaQuery('(hover: hover)');
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
   let aboutRef = useRef()
   let projectsRef = useRef()
   let contactRef = useRef()
   let infoRef= useRef()
   let slideRef= useRef()
+  let leftQuoteRef = useRef()
+  let rightQuoteRef = useRef()
   let [myView , setMyView] = useState(false)
   let [jobView , setJobView] = useState(false)
-  let [myViewHover , setMyViewHover] = useState(false)
-  let [jobViewHover , setJobViewHover] = useState(false)
+  const DEFAULT_EXIT = 180
+  const SWITCH_EXIT = 0
+  let [myExit , setMyExit] = useState(DEFAULT_EXIT)
+  let [jobExit , setJobExit] = useState(DEFAULT_EXIT)
   let [about , setAbout] = useState("I come from the British Virgin Islands but I'm currently studying Computer Science at UCA")
   let [about_2 , setAbout_2] = useState("My aim in life is to grow everyday and enjoy myself in the process.")
   let [about2 , setAbout2] = useState("I design and develop responsive web applications")
@@ -58,27 +66,31 @@ function App() {
   let[emailMessage,setEmailMessage]=useState("")
   let[emailError,setEmailError]=useState("none")
 
-  let[projectInView,setProjectInView]=useState("none")
+  let[projectInView,setProjectInView]=useState(false)
+  let[showHoverHint,setShowHoverHint]=useState(true)
 
 
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
       const onScroll = () => setOffset(window.pageYOffset);
-      // clean up code
-      window.removeEventListener('scroll', onScroll);
       window.addEventListener('scroll', onScroll, { passive: true });
       return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  if(projectsRef.current){
-    if(offset+600>projectsRef.current.offsetTop&&offset+100<(projectsRef.current.offsetTop+projectsRef.current.offsetHeight)){
-      !projectInView&&setProjectInView(true)
-    }
-    else{
-      projectInView&&setProjectInView(false)
-    }
-  }
+  useEffect(() => {
+    if (!projectsRef.current) return;
+    const top = projectsRef.current.offsetTop;
+    const height = projectsRef.current.offsetHeight;
+    const inView = offset + 600 > top && offset + 100 < top + height;
+    setProjectInView(inView);
+  }, [offset]);
+
+  useEffect(() => {
+    if (!canHover) return;
+    const timer = setTimeout(() => setShowHoverHint(false), 4500);
+    return () => clearTimeout(timer);
+  }, [canHover]);
  
   const scrollBar = {
     '&::-webkit-scrollbar': {
@@ -99,13 +111,39 @@ function App() {
     }
 
 
+  const glowCue = keyframes`
+    0% { text-shadow: 0 0 0 rgba(158,238,238,0); }
+    40% { text-shadow: 0 0 5px rgba(158,238,238,0.22), 0 0 10px rgba(68,189,187,0.16); }
+    100% { text-shadow: 0 0 0 rgba(158,238,238,0); }
+  `;
+  const glowCueSoft = keyframes`
+    0% { text-shadow: 0 0 0 rgba(158,238,238,0); }
+    40% { text-shadow: 0 0 4px rgba(158,238,238,0.18), 0 0 8px rgba(68,189,187,0.12); }
+    100% { text-shadow: 0 0 0 rgba(158,238,238,0); }
+  `;
+
   let viewStyle = {
     color:'primary.main',
     fontSize:{xs:28,md:36,lg:52},
+    cursor:'pointer',
+    position:'relative',
+    display:'inline-block',
+    paddingInline:'0.12em',
+    borderRadius:4,
+    backgroundImage:'linear-gradient(120deg, rgba(0,102,102,0.25), rgba(68,189,187,0.35))',
+    backgroundRepeat:'no-repeat',
+    backgroundSize:'0% 100%',
+    backgroundPosition:'0 100%',
+    transition:'background-size 250ms ease, color 250ms ease, text-shadow 250ms ease, transform 150ms ease',
+    animation: reduceMotion ? 'none' : `${glowCue} 3.8s ease-in-out infinite`,
+    willChange:'text-shadow',
     '&:hover':{
-      color:'primary.light', 
-      // fontSize:{xs:36,md:44},
-    }
+      color:'primary.light',
+      backgroundSize:'120% 100%',
+      textShadow:'0 0 10px rgba(158,238,238,0.35)',
+      transform:'translateY(-1px)',
+      animationPlayState:'paused',
+    },
     
   }
 
@@ -136,9 +174,48 @@ function App() {
   },
   input:{color: '#fff'}
 }
-let quoteStyle= {
-  fontSize:{xs:16,sm:16,md:18,lg:18}
-}
+  let quoteStyle= {
+    fontSize:{xs:16,sm:18,md:20,lg:22},
+    lineHeight:1.45,
+    fontStyle:'italic',
+    fontWeight:500,
+    letterSpacing:'0.01em',
+  }
+  let authorStyle= {
+    fontSize:{xs:14,sm:16,md:18,lg:20},
+    opacity:0.85,
+    fontWeight:600,
+    letterSpacing:'0.02em',
+  }
+  let quoteWrapLeft = {
+    display:'flex',
+    justifyContent:'flex-start',
+    width:'100%',
+    minHeight:{xs:78, sm:102, md:120, lg:138},
+  }
+  let quoteWrapRight = {
+    display:'flex',
+    justifyContent:'flex-end',
+    width:'100%',
+    minHeight:{xs:78, sm:102, md:120, lg:138},
+  }
+  let quoteShellLeft = {
+    maxWidth:{xs:'100%', md:420},
+    px:{xs:1.5, md:2},
+    py:{xs:1, md:1.25},
+    borderRadius:2,
+    backgroundColor:'rgba(0,0,0,0.18)',
+    borderLeft:'3px solid',
+    borderLeftColor:'primary.mid',
+    boxShadow:'0 8px 24px rgba(0,0,0,0.2)',
+    backdropFilter:'blur(4px)',
+  }
+  let quoteShellRight = {
+    ...quoteShellLeft,
+    borderLeft:'none',
+    borderRight:'3px solid',
+    borderRightColor:'primary.mid',
+  }
 let aboutStyle= {
   fontSize:{xs:20,sm:22,md:24,lg:30}
 }
@@ -175,19 +252,7 @@ let aboutStyle= {
   }
 
 
-    useEffect(()=>{
-      // console.log("my: "+myViewHover+"job: "+jobViewHover)
-      
-      if(myViewHover && !jobViewHover){
-        setMyView(true)
-      }
-    else if(!myViewHover && jobViewHover){
-      setJobView(true)
-    }
-
-      if(!myViewHover){setMyView(false)}
-      if(!jobViewHover){setJobView(false)}
-    },[jobViewHover,myViewHover])
+    // hover handlers drive view state directly
   
   
       // setAbout("I come from the British Virgin Islands but I'm currently studying Computer Science at UCA")
@@ -236,69 +301,109 @@ let aboutStyle= {
 
           <Grid container item xs={5} justifyContent='space-evenly' sx={{pt:2}}flexDirection='column'>
             
-          <Box >
-                <Slide direction={"right"} in={myView} container={aboutRef.current} unmountOnExit  timeout={{enter:600,exit:0}}>
-                  <Box>
+          <Box sx={quoteWrapLeft} ref={leftQuoteRef}>
+                <Slide direction={"right"} in={myView} container={leftQuoteRef.current} unmountOnExit  timeout={{enter:360,exit:myExit}}>
+                  <Box sx={quoteShellLeft}>
                     <Typography color='secondary.light' variant='h5' align='left' sx={quoteStyle}>{quote1}</Typography>
-                    <Typography color='primary.mid' variant='h5' align='left' sx={quoteStyle}>{author1}</Typography>
+                    <Typography color='primary.mid' variant='h5' align='left' sx={authorStyle}>{author1}</Typography>
                   </Box>
                 </Slide>
 
-                <Slide direction={"right"} in={jobView} container={aboutRef.current} unmountOnExit  timeout={{enter:600,exit:0}}>
-                  <Box>
+                <Slide direction={"right"} in={jobView} container={leftQuoteRef.current} unmountOnExit  timeout={{enter:360,exit:jobExit}}>
+                  <Box sx={quoteShellLeft}>
                     <Typography color='secondary.light' variant='h5' align='left' sx={quoteStyle}>{quote3}</Typography>
-                    <Typography color='primary.mid' variant='h5' align='left' sx={quoteStyle}>{author3}</Typography>
+                    <Typography color='primary.mid' variant='h5' align='left' sx={authorStyle}>{author3}</Typography>
                   </Box>
                 </Slide>
             </Box>
 
 
 
-            <Box>
-                <Slide direction={"left"} in={myView} container={aboutRef.current} unmountOnExit  timeout={{enter:600,exit:0}}>
-                  <Box >
+            <Box sx={quoteWrapRight} ref={rightQuoteRef}>
+                <Slide direction={"left"} in={myView} container={rightQuoteRef.current} unmountOnExit  timeout={{enter:360,exit:myExit}}>
+                  <Box sx={quoteShellRight}>
                     <Typography color='secondary.light' variant='h6' align='right' sx={quoteStyle}>{quote2}</Typography>
-                    <Typography color='primary.mid' variant='h6' align='right' sx={quoteStyle}>{author2}</Typography>
+                    <Typography color='primary.mid' variant='h6' align='right' sx={authorStyle}>{author2}</Typography>
                   </Box>
                 </Slide>
 
-                <Slide direction={"left"} in={jobView} container={aboutRef.current} unmountOnExit timeout={{enter:600,exit:0}}>
-                  <Box >
+                <Slide direction={"left"} in={jobView} container={rightQuoteRef.current} unmountOnExit timeout={{enter:360,exit:jobExit}}>
+                  <Box sx={quoteShellRight}>
                     <Typography color='secondary.light' variant='h6' align='right' sx={quoteStyle}>{quote4}</Typography>
-                    <Typography color='primary.mid' variant='h6' align='right' sx={quoteStyle}>{author4}</Typography>
+                    <Typography color='primary.mid' variant='h6' align='right' sx={authorStyle}>{author4}</Typography>
                   </Box>
                 </Slide>
             </Box>
           </Grid>
 
           <Grid container item xs={5} alignItems='center' justifyContent='flex-start' sx={{pt:0}} direction='column'  >
-            <Typography color='secondary.light' variant={lg_up?'h5':'h5'} sx={homeStyle}align='center'>
-              Hi, I'm 
-              <Typography  display='inline' variant='inherit' 
-              // component='h1'
-               onMouseEnter={()=>{setMyViewHover(true)}} onMouseLeave={()=>{setMyViewHover(false)}}
-              sx={{pl:1,...viewStyle}}>Shamarl</Typography>
-            </Typography>
+            <Box>
+              <Typography color='secondary.light' variant={lg_up?'h5':'h5'} sx={homeStyle}align='center'>
+                Hi, I'm 
+                <Typography  display='inline' variant='inherit' 
+                // component='h1'
+                 onMouseEnter={() => {
+                   setMyExit(DEFAULT_EXIT)
+                   setJobExit(SWITCH_EXIT)
+                   setMyView(true)
+                   setJobView(false)
+                   setShowHoverHint(false)
+                 }}
+                 onMouseLeave={() => {
+                   setMyExit(DEFAULT_EXIT)
+                   setMyView(false)
+                 }}
+                sx={{pl:1,...viewStyle, animationDelay:'0s'}}>Shamarl</Typography>
+              </Typography>
 
-          
-            <Typography color='secondary.light' variant={lg_up?'h5':'h5'} sx={homeStyle} align='center'>
-              I'm a full-stack
-              <Typography display='inline'  variant='inherit' component='h1' onMouseEnter={()=>{setJobViewHover(true);}} onMouseLeave={()=>{setJobViewHover(false);}}
-              sx={{pl:1,...viewStyle}}>web developer</Typography>
-            </Typography>
+            
+              <Typography color='secondary.light' variant={lg_up?'h5':'h5'} sx={homeStyle} align='center'>
+                I'm a full-stack
+                <Typography display='inline'  variant='inherit' component='h1'
+                 onMouseEnter={() => {
+                   setJobExit(DEFAULT_EXIT)
+                   setMyExit(SWITCH_EXIT)
+                   setJobView(true)
+                   setMyView(false)
+                   setShowHoverHint(false)
+                 }}
+                 onMouseLeave={() => {
+                   setJobExit(DEFAULT_EXIT)
+                   setJobView(false)
+                 }}
+                sx={{pl:1,...viewStyle, animationDelay:'2.0s', animation: reduceMotion ? 'none' : `${glowCueSoft} 3.8s ease-in-out infinite`}}>web developer</Typography>
+              </Typography>
+
+              {canHover && (
+                <Typography
+                  color='secondary.light'
+                  align='center'
+                  sx={{
+                    opacity: showHoverHint ? 0.6 : 0,
+                    transition: 'opacity 600ms ease',
+                    fontSize: {xs:12, md:13},
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    mt: 1,
+                  }}
+                >
+                  Hover my name or title
+                </Typography>
+              )}
+            </Box>
           
 
 
             <Grid container item justifyContent="center" alignItems='flex-start'  xs={3} sx={{pt:2}} ref={aboutRef}>
                 <Box alignItems="flex-start">
-                  <Slide direction={"up"} in={jobView} container={aboutRef.current} unmountOnExit timeout={{enter:800,exit:0}}>
+                  <Slide direction={"up"} in={jobView} container={aboutRef.current} unmountOnExit timeout={{enter:420,exit:jobExit}}>
                     <Box alignItems="center" >
                       {/* <Typography color='secondary.light' variant='h5' align='center' sx={quoteStyle} >{about2}</Typography> */}
                       <Typography color='secondary.light'  variant={lg_up?'h5':'h5'} align='center' sx={quoteStyle} >{about2_2}</Typography>
                     </Box>
                   </Slide>
 
-                  <Slide direction={"up"} in={myView} container={aboutRef.current} unmountOnExit timeout={{enter:800,exit:0}}>
+                  <Slide direction={"up"} in={myView} container={aboutRef.current} unmountOnExit timeout={{enter:420,exit:myExit}}>
                     <Box alignItems="center" >
                       {/* <Typography color='secondary.light' variant='h5' align='center' sx={quoteStyle} >{about}</Typography> */}
                       <Typography color='secondary.light'  variant={lg_up?'h5':'h5'} align='center' sx={quoteStyle} >{about_2}</Typography>
@@ -363,58 +468,65 @@ let aboutStyle= {
         <Box ref = {slideRef}  overflow='hidden' >
           <Grid container justifyContent='center' spacing={4}>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current}timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView} container={slideRef.current}timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4}  justifyContent='center'>
-              <Project title='Pomonoto' image={pomonotoScreen} tags={['React','Django', 'User Authentication']} link="https://pomonoto.netlify.app/"
+              <Project index={0} title="AI Trading Journal" image={aiTradingJournalScreen} tags={['React','AI Integration','Analytics']} link="https://trade-drop.vercel.app/" badge="Beta" imageFit="contain"
+              description='AI-powered trading journal that logs trades, tags setups, and surfaces patterns with automated insights.'/>
+            </Grid>
+          </Slide>
+
+          <Slide direction="up" in={projectInView}  container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
+            <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
+              <Project index={1} title='Pomonoto' image={pomonotoScreen} tags={['React','Django', 'User Authentication']} link="https://pomonoto.netlify.app/"
               description="Pomodoro timer with a helpful twist. During work phases, users can jot down disappearing notes and see them when on break."/>
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView}  container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView}  container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="D'Core Paperie" image={dcoreScreen} tags={['React','Design']} link="https://www.dcorepaperie.com/"
+              <Project index={2} title="D'Core Paperie" image={dcoreScreen} tags={['React','Design']} link="https://www.dcorepaperie.com/"
               description='Website for local paperie business showcasing their services and all other pertinent information'/>
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']}
-              //  link="https://www.cubeplex.shop/"
+              <Project index={3} title="Cubeplex" image={cubeplexScreen} tags={['React','E-Commerce','Design','Stripe payment']} badge="No longer for sale"
+               link="https://cubeplex.netlify.app/"
               description='E-Commerce website for The Cubeplex'/>
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
             
-            <Project title="Guidedly" image={guidedlyScreen}
+            <Project index={4} title="Guidedly" image={guidedlyScreen}
              tags={['React','design']} link='https://guidedly.netlify.app/'
               description='Guidedly is an online meditation timer that uses speech to to text to create a guided meditation with your own mantras.'/>
             
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          {/* <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Lazy Irrigation" image={lazyPotScreen} tags={['Shopify','E-Commerce','Design']} 
+              <Project index={5} title="Lazy Irrigation" image={lazyPotScreen} tags={['Shopify','E-Commerce','Design']} 
               // link="https://irrigationpots.myshopify.com/"
               description='Shopify E-Comerce website for Lazy Irrigation Pots'/>
             </Grid>
           </Slide>
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
-              <Project title="Eternally Bonded" image={eternallyBondedScreen} tags={['Shopify','E-Commerce','Design']} 
+              <Project index={6} title="Eternally Bonded" image={eternallyBondedScreen} tags={['Shopify','E-Commerce','Design']} 
               // link="https://eternally-bonded-rings.myshopify.com/"
               description='Shopify E-Comerce website for matching ring sets'/>
             </Grid>
-          </Slide>
+          </Slide> */}
 
-          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:800,exit:0}} style={{ transitionDelay:100}}>
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
             <Box class='academy-badge' width='50px'>
-            <Project title="SEO Certification" image={seoCert}
+            <Project index={7} title="SEO Certification" image={seoCert}
              tags={['SEO']} link='null'
               description='Obtained search engine optimization certification through hubspot academy'/>
             </Box>
@@ -452,6 +564,7 @@ let aboutStyle= {
           <Stack direction='row' gap={2} justifyContent='center'>
             <Fab sx={fabStyle} size='medium' component={Link} href='https://twitter.com/Shanka26/' target="_blank" rel="noopener"><TwitterIcon/></Fab>
             <Fab sx={fabStyle} size='medium'  component={Link} href='https://github.com/Shanka26' target="_blank" rel="noopener"><GitHubIcon/></Fab>
+            <Fab sx={fabStyle} size='medium'  component={Link} href='https://www.linkedin.com/in/shamarl-l-a70864118' target="_blank" rel="noopener"><LinkedInIcon/></Fab>
             </Stack>
 
             <Box mx={{xs:4,sm:8,md:16,lg:24}} my={2} >
@@ -502,7 +615,6 @@ let aboutStyle= {
             </Grid>
             </Box>
 
-         
 
       </Box>
       <Box>
