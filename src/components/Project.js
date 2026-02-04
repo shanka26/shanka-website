@@ -15,7 +15,7 @@ import { useTheme } from '@mui/material/styles';
 const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cover',mediaSize}) => {
     const size_theme = useTheme()
     const md_up = useMediaQuery(size_theme.breakpoints.up('md'));
-    const canHover = useMediaQuery('(hover: hover)');
+    const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
     const offsetY = md_up ? (index % 2 === 0 ? 0 : 16) : 0;
     const defaultMedia = { xs: { w: 320, h: 270 }, md: { w: 340, h: 300 } };
     const mediaW = md_up
@@ -50,11 +50,13 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
             filter:'brightness(0.6)',
             transform:'scale(1.02)',
         },
-        '&:hover .project-overlay':{
-            opacity:1,
-            transform:'translateY(0)',
-            pointerEvents:'auto',
-        },
+        ...(canHover ? {
+            '&:hover .project-overlay':{
+                opacity:1,
+                transform:'translateY(0)',
+                pointerEvents:'auto',
+            },
+        } : {}),
     };
     
 
