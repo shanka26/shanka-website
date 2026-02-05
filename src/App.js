@@ -17,6 +17,7 @@ import seoCert from './res/hubspotCertweb.webp'
 import lazyPotScreen from './res/lazypot.webp'
 import eternallyBondedScreen from './res/eternallyBonded.webp'
 import aiTradingJournalScreen from './res/tradeDropScreen.png'
+import unwineScreen from './res/unwine_screenshot.png'
 // import styled from "styled-components";
 import { styled, keyframes } from '@mui/system';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -487,8 +488,18 @@ let aboutStyle= {
             <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
             
             <Project index={4} title="Guidedly" image={guidedlyScreen}
-             tags={['React','design']} link='https://guidedly.netlify.app/'
+             tags={['React','Design']} link='https://guidedly.netlify.app/'
               description='Guidedly is an online meditation timer that uses speech to to text to create a guided meditation with your own mantras.'/>
+            
+            </Grid>
+          </Slide>
+
+          <Slide direction="up" in={projectInView} container={slideRef.current} timeout={{enter:550,exit:0}} style={{ transitionDelay:100}}>
+            <Grid container item xs={12} md={6} lg={4} justifyContent='center'>
+            
+            <Project index={4} title="UnWine & Co" image={unwineScreen}
+             tags={['AI Development','Design','Client work']} link='https://unwine.lovable.app/'
+              description='Elegant, brand-driven web experience for a wine lounge and artisan bakery, designed to evoke atmosphere and drive reservations through immersive visual storytelling.'/>
             
             </Grid>
           </Slide>
