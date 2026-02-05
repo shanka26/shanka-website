@@ -16,7 +16,8 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
     const size_theme = useTheme()
     const md_up = useMediaQuery(size_theme.breakpoints.up('md'));
     const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
-    const forceOverlay = useMediaQuery(size_theme.breakpoints.down('md'));
+    const forceOverlay = useMediaQuery(size_theme.breakpoints.down('lg'));
+    const overlayAlwaysOn = forceOverlay || !canHover;
     const offsetY = md_up ? (index % 2 === 0 ? 0 : 16) : 0;
     const defaultMedia = { xs: { w: 320, h: 270 }, md: { w: 340, h: 300 } };
     const mediaW = md_up
@@ -44,15 +45,15 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
         borderColor:'rgba(0,122,121,0.35)',
         boxShadow:'0 12px 28px rgba(0,0,0,0.25)',
         transition:'transform 200ms ease, box-shadow 200ms ease',
-        '&:hover':{
-            transform:'translateY(-4px)',
-            boxShadow:'0 18px 36px rgba(0,0,0,0.3)',
-        },
-        '&:hover .project-media':{
-            filter:'brightness(0.6)',
-            transform:'scale(1.02)',
-        },
-        ...(canHover && !forceOverlay ? {
+        ...(canHover && !overlayAlwaysOn ? {
+            '&:hover':{
+                transform:'translateY(-4px)',
+                boxShadow:'0 18px 36px rgba(0,0,0,0.3)',
+            },
+            '&:hover .project-media':{
+                filter:'brightness(0.6)',
+                transform:'scale(1.02)',
+            },
             '&:hover .project-overlay':{
                 opacity:1,
                 transform:'translateY(0)',
@@ -138,22 +139,31 @@ const Project = ({title,description,image,tags,link,index=0,badge,imageFit='cove
                             alignItems:'center',
                             textAlign:'center',
                             px:2,
-                            opacity: (canHover && !forceOverlay) ? 0 : 1,
-                            transform: (canHover && !forceOverlay) ? 'translateY(10px)' : 'translateY(0)',
+                            opacity: overlayAlwaysOn ? 1 : 0,
+                            transform: overlayAlwaysOn ? 'translateY(0)' : 'translateY(10px)',
                             transition:'opacity 220ms ease, transform 220ms ease',
-                            background: (canHover && !forceOverlay)
-                                ? 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))'
-                                : (forceOverlay ? forceOverlayBg : mobileOverlayBg),
+                            background: overlayAlwaysOn
+                                ? 'linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7))'
+                                : 'linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35))',
                             borderRadius:1,
-                            pointerEvents: (canHover && !forceOverlay) ? 'none' : 'auto',
+                            pointerEvents: overlayAlwaysOn ? 'auto' : 'none',
                         }}
                     >
-                        <Typography variant='body1' color='secondary.light' align ='center' fontSize={{xs:14,md:16}} sx={{mb:2, textShadow:'0 2px 8px rgba(0,0,0,0.45)'}}>
+                        <Typography variant='body1' color='secondary.light' align ='center' fontSize={{xs:15,md:18}} sx={{mb:2, textShadow:'0 2px 10px rgba(0,0,0,0.7)'}}>
                             {description}
                         </Typography>
                         <Stack direction='row' spacing={1} useFlexGap flexWrap='wrap' justifyContent='center'>
                             {tags.map((tag)=>(
-                                <Chip key={tag} sx={{backgroundColor:'rgba(0,0,0,.25)',color:'secondary.light', fontSize:{xs:11,md:13}}} label={tag}/>
+                                <Chip
+                                    key={tag}
+                                    sx={{
+                                        backgroundColor:'rgba(0,0,0,0.8)',
+                                        color:'secondary.light',
+                                        fontSize:{xs:12,md:14},
+                                        border:'1px solid rgba(255,255,255,0.08)',
+                                    }}
+                                    label={tag}
+                                />
                             ))}
                         </Stack>
                         {link && link !== 'null' && (

@@ -499,7 +499,7 @@ let aboutStyle= {
             
             <Project index={4} title="UnWine & Co" image={unwineScreen}
              tags={['AI Development','Design','Client work']} link='https://unwine.lovable.app/'
-              description='Elegant, brand-driven web experience for a wine lounge and artisan bakery, designed to evoke atmosphere and drive reservations through immersive visual storytelling.'/>
+              description='Brand-driven web experience for a wine lounge and artisan bakery, designed to  drive reservations through immersive atmosphere.'/>
             
             </Grid>
           </Slide>
