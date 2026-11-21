@@ -371,9 +371,7 @@ function App() {
           <div className="contact__main">
             <span className="credit rv">03 / Contact</span>
             <h2 className="mega mega--left rv">
-              If I can build this,
-              <br />
-              imagine what we can build together.
+              Imagine what we can build together.
             </h2>
             <div className="contact__doors rv">
               <button
