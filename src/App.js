@@ -16,51 +16,46 @@ const PROJECTS = [
   {
     title: 'TradeDrop',
     image: aiTradingJournalScreen,
-    tags: ['Next.js', 'OCR', 'OpenAI API', 'Analytics'],
+    tags: ['Next.js', 'OCR', 'OpenAI'],
     link: 'https://trade-drop.vercel.app/',
     badge: 'Beta',
-    description:
-      'An AI trading journal that reads trades straight from screenshots with OCR and the OpenAI API, then turns them into a performance dashboard with AI-generated insights.',
+    description: 'Reads trades from screenshots with OCR and AI, then coaches you with insights.',
   },
   {
     title: 'UnWine & Co',
     image: unwineScreen,
-    tags: ['AI Development', 'Design', 'Client work'],
+    tags: ['Client work', 'Design', 'AI-built'],
     link: 'https://unwine.lovable.app/',
-    description:
-      'A brand-driven web experience for a wine lounge and artisan bakery, designed to drive reservations through atmosphere.',
+    description: 'A wine lounge and bakery site built to turn atmosphere into reservations.',
   },
   {
     title: 'Guidedly',
     image: guidedlyScreen,
-    tags: ['React', 'Design'],
+    tags: ['React', 'Text-to-speech'],
     link: 'https://guidedly.netlify.app/',
-    description:
-      'An online meditation timer that uses speech to text to create a guided meditation with your own mantras.',
+    description: 'Turns your own mantras into guided meditations.',
   },
   {
     title: 'Pomonoto',
     image: pomonotoScreen,
-    tags: ['React', 'Django', 'User Authentication'],
+    tags: ['React', 'Django', 'Auth'],
     link: 'https://pomonoto.netlify.app/',
-    description:
-      'A Pomodoro timer with a helpful twist: jot down disappearing notes while you work, and see them again on your break.',
+    description: 'A Pomodoro timer whose notes vanish while you work and return on your break.',
   },
   {
     title: 'Cubeplex',
     image: cubeplexScreen,
-    tags: ['React', 'E-Commerce', 'Stripe payment'],
+    tags: ['React', 'E-commerce', 'Stripe'],
     link: 'https://cubeplex.netlify.app/',
     badge: 'Checkout disabled',
-    description: 'An e-commerce storefront for The Cubeplex, from product pages through to Stripe checkout.',
+    description: 'A full storefront, from product pages to Stripe checkout.',
   },
   {
     title: "D'Core Paperie",
     image: dcoreScreen,
-    tags: ['React', 'Design'],
+    tags: ['React', 'Client work'],
     link: 'https://dcore.netlify.app/',
-    description:
-      'A website for a local paperie business, showcasing their services and everything a customer needs to know.',
+    description: 'A clean showcase site for a local paperie.',
   },
 ]
 
@@ -75,48 +70,47 @@ const EXPERIENCE = [
     role: 'Full-stack Software Engineer',
     org: "Dillard's",
     points: [
-      'Optimized critical file-processing applications, improving performance by 300% and cutting wait times.',
-      'Revamped the allocation management system: about 50% less setup time, a user-focused UI that restored adoption, and AI-driven decisions for inventory distribution.',
-      'Sped up queries with strategic SQL indexing, and worked with cross-functional teams to integrate AI models into business automation.',
-      'Adopted test-driven development to raise code quality and reduce bugs.',
+      '300% faster file processing on critical apps.',
+      '~50% less setup time on a rebuilt allocation system, with AI-driven inventory decisions.',
+      'Faster SQL through indexing. Test-driven development.',
     ],
   },
   {
     when: '2022 — Present',
-    role: 'Web Application Developer',
-    org: 'Independent projects & client work',
-    points: ['TradeDrop, Pomonoto, Cubeplex, Guidedly and client sites — see Selected work above.'],
+    role: 'Web Developer',
+    org: 'Independent',
+    points: ['Client sites and products — see Work.'],
   },
 ]
 
 const EDUCATION = [
-  { when: 'May 2023', what: 'B.S. Computer Science', where: 'University of Central Arkansas, Conway, AR' },
-  { when: 'Jul 2020', what: "Associate's, Computer Studies", where: 'H. Lavity Stoutt Community College, BVI' },
+  { when: '2023', what: 'B.S. Computer Science', where: 'University of Central Arkansas' },
+  { when: '2020', what: "Associate's, Computer Studies", where: 'H. Lavity Stoutt Community College, BVI' },
 ]
 
+// Short on purpose: the full list lives in the PDF.
 const SKILLS = [
-  { group: 'Frontend', items: ['React', 'Next.js', 'Angular', 'HTML & CSS'] },
-  { group: 'Backend', items: ['Spring Boot (Java)', 'Django (Python)', 'Groovy', 'SQL', 'Teradata', 'MongoDB'] },
-  { group: 'Quality', items: ['TDD', 'JUnit', 'Mockito', 'Cypress', 'Git & pipelines'] },
-  { group: 'AI-assisted', items: ['OpenAI (ChatGPT, Codex)', 'Lovable', 'v0', 'Pythagora'] },
+  { group: 'Frontend', items: ['React', 'Next.js', 'Angular'] },
+  { group: 'Backend', items: ['Spring Boot', 'Django', 'SQL', 'MongoDB'] },
+  { group: 'Quality', items: ['TDD', 'JUnit', 'Cypress'] },
+  { group: 'AI', items: ['OpenAI', 'Lovable', 'v0'] },
 ]
 
 const CARDS = [
   {
     tone: 'teal',
-    title: 'From the BVI. Based in Little Rock.',
+    title: 'BVI-born. Little Rock-based.',
     big: 'AR',
-    body: 'Island roots, Arkansas home base. Working with clients anywhere, on Central Time.',
+    body: 'Working with clients anywhere, on Central Time.',
   },
   {
     title: 'What I build with',
     list: ['AI coding agents', 'React', 'Next.js', 'Angular', 'Spring Boot'],
-    body: 'AI handles the speed. I write, read and review the code it touches — so what ships is fast and holds up.',
+    body: 'AI for speed. My own code review for quality.',
   },
   {
     title: 'Quality, by hand',
     quote: '“Fast is easy now. Right still takes a developer.”',
-    body: 'Every project gets a human code review, testing across screen sizes, and a final pass on the details before it goes live.',
   },
 ]
 
@@ -228,14 +222,11 @@ function App() {
             <p className="tagline rv">Full-stack software engineer — Little Rock, AR</p>
             <h1 className="wordmark rv">Shanka</h1>
           </div>
-          <p className="hero__intro body-copy rv">
-            Hi, I'm Shamarl. I build web apps for teams and clients at AI speed — and check every line like an
-            engineer, because I am one.
-          </p>
+          <p className="hero__intro body-copy rv">Hi, I'm Shamarl. I build web apps for teams and clients.</p>
           <div className="hero__card rv">
             <h2 className="label-lg">Designed and built by Shamarl Leonard.</h2>
             <hr className="dashed" />
-            <p className="card-body">Born in the British Virgin Islands. Building from Little Rock, Arkansas.</p>
+            <p className="card-body">Scroll to see how.</p>
           </div>
           <span className="scroll-cue label-sm">
             <span className="scroll-cue__dot" /> Scroll to continue
@@ -249,10 +240,8 @@ function App() {
             <br />a portfolio.
           </h2>
           <p className="body-copy reveal__right rv">
-            It's proof of process: ideas taken from first sketch to shipped product, with every step checked by
-            hand.
+            It's proof of process — from first sketch to shipped product.
           </p>
-          <span className="legal reveal__foot">* Scroll slowly. It's more fun.</span>
         </section>
 
         {/* 3 — Headline over the open laptop */}
@@ -261,14 +250,13 @@ function App() {
             <h2 className="mega rv">
               Built with AI<sup>*</sup>
             </h2>
-            <span className="credit rv">Shanka-1</span>
           </div>
           <p className="built__side label-sm rv">
             Reviewed by a human.
             <br />
             Tested before it ships.
           </p>
-          <span className="legal built__foot">* And checked line by line by someone who can actually code.</span>
+          <span className="legal built__foot">* Not by AI alone.</span>
         </section>
 
         {/* 4 — Pinned glowing word + project strip */}
@@ -292,14 +280,10 @@ function App() {
           <header className="section-intro">
             <span className="credit rv">01 / Work</span>
             <h2 className="heading rv">Selected work.</h2>
-            <p className="card-body muted rv">Client sites and products I've designed, built and shipped.</p>
           </header>
           {PROJECTS.map((project, i) => (
             <Project key={project.title} index={i} total={PROJECTS.length} {...project} />
           ))}
-          <p className="cert-line rv">
-            <span className="credit">Credit</span> SEO certification — HubSpot Academy
-          </p>
         </div>
 
         {/* 6 — Light section: the laptop steps aside */}
@@ -318,7 +302,7 @@ function App() {
                   </ul>
                 )}
                 {c.quote && <p className="card__quote">{c.quote}</p>}
-                <p className="card-body">{c.body}</p>
+                {c.body && <p className="card-body">{c.body}</p>}
               </article>
             ))}
           </div>
@@ -329,10 +313,7 @@ function App() {
           <div className="experience__main">
             <span className="credit rv">02 / Résumé</span>
             <h2 className="heading rv">For hiring teams.</h2>
-            <p className="body-copy rv">
-              Full-stack software engineer working across React, Angular and Spring Boot — with AI integration and
-              test-driven habits built in.
-            </p>
+            <p className="body-copy rv">Full-stack engineer at Dillard's since 2023.</p>
             <div className="experience__actions rv">
               <a className="btn-pill" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
                 Download résumé (PDF)
@@ -422,10 +403,6 @@ function App() {
         <section className="contact-form-section">
           <h2 className="heading rv">Send a message.</h2>
           <div className="contact__form-wrap">
-            <p className="body-copy rv">
-              Have a project, a role, or an idea that needs building? Send me a message and I'll get back to
-              you.
-            </p>
             <form
               ref={formRef}
               className="contact-form rv"
@@ -435,7 +412,7 @@ function App() {
               }}
             >
               <fieldset className="topic">
-                <legend className="label-sm">I'm reaching out about</legend>
+                <legend className="label-sm">About</legend>
                 {['Project', 'Job opportunity', 'Something else'].map((t) => (
                   <label key={t} className={`topic__opt ${topic === t ? 'is-on' : ''}`}>
                     <input type="radio" name="topic" value={t} checked={topic === t} onChange={() => setTopic(t)} />
