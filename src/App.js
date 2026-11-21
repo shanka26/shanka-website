@@ -14,13 +14,13 @@ import './App.css'
 
 const PROJECTS = [
   {
-    title: 'AI Trading Journal',
+    title: 'TradeDrop',
     image: aiTradingJournalScreen,
-    tags: ['React', 'AI Integration', 'Analytics'],
+    tags: ['Next.js', 'OCR', 'OpenAI API', 'Analytics'],
     link: 'https://trade-drop.vercel.app/',
     badge: 'Beta',
     description:
-      'An AI-powered trading journal that logs trades, tags setups, and surfaces patterns with automated insights.',
+      'An AI trading journal that reads trades straight from screenshots with OCR and the OpenAI API, then turns them into a performance dashboard with AI-generated insights.',
   },
   {
     title: 'UnWine & Co',
@@ -66,6 +66,41 @@ const PROJECTS = [
 
 const PROJECT_IMAGES = PROJECTS.map((p) => p.image)
 
+const RESUME_URL = `${process.env.PUBLIC_URL}/Shamarl_Leonard_Resume.pdf`
+
+// From the résumé — keep in sync with public/Shamarl_Leonard_Resume.pdf
+const EXPERIENCE = [
+  {
+    when: 'Jun 2023 — Present',
+    role: 'Full-stack Software Engineer',
+    org: "Dillard's",
+    points: [
+      'Optimized critical file-processing applications, improving performance by 300% and cutting wait times.',
+      'Revamped the allocation management system: about 50% less setup time, a user-focused UI that restored adoption, and AI-driven decisions for inventory distribution.',
+      'Sped up queries with strategic SQL indexing, and worked with cross-functional teams to integrate AI models into business automation.',
+      'Adopted test-driven development to raise code quality and reduce bugs.',
+    ],
+  },
+  {
+    when: '2022 — Present',
+    role: 'Web Application Developer',
+    org: 'Independent projects & client work',
+    points: ['TradeDrop, Pomonoto, Cubeplex, Guidedly and client sites — see Selected work above.'],
+  },
+]
+
+const EDUCATION = [
+  { when: 'May 2023', what: 'B.S. Computer Science', where: 'University of Central Arkansas, Conway, AR' },
+  { when: 'Jul 2020', what: "Associate's, Computer Studies", where: 'H. Lavity Stoutt Community College, BVI' },
+]
+
+const SKILLS = [
+  { group: 'Frontend', items: ['React', 'Next.js', 'Angular', 'HTML & CSS'] },
+  { group: 'Backend', items: ['Spring Boot (Java)', 'Django (Python)', 'Groovy', 'SQL', 'Teradata', 'MongoDB'] },
+  { group: 'Quality', items: ['TDD', 'JUnit', 'Mockito', 'Cypress', 'Git & pipelines'] },
+  { group: 'AI-assisted', items: ['OpenAI (ChatGPT, Codex)', 'Lovable', 'v0', 'Pythagora'] },
+]
+
 const CARDS = [
   {
     tone: 'teal',
@@ -75,7 +110,7 @@ const CARDS = [
   },
   {
     title: 'What I build with',
-    list: ['AI coding agents', 'React', 'Django', 'Stripe', 'Vercel'],
+    list: ['AI coding agents', 'React', 'Next.js', 'Angular', 'Spring Boot'],
     body: 'AI handles the speed. I write, read and review the code it touches — so what ships is fast and holds up.',
   },
   {
@@ -111,7 +146,9 @@ function useReveal() {
 function App() {
   const introRef = useRef(null)
   const workRef = useRef(null)
+  const resumeRef = useRef(null)
   const contactRef = useRef(null)
+  const [topic, setTopic] = useState('Project')
   const formRef = useRef(null)
   const [active, setActive] = useState('intro')
 
@@ -126,6 +163,7 @@ function App() {
     const sections = [
       ['intro', introRef],
       ['work', workRef],
+      ['resume', resumeRef],
       ['contact', contactRef],
     ]
     const observer = new IntersectionObserver(
@@ -152,7 +190,7 @@ function App() {
     send(
       'service_jgqvxe4',
       'template_gi813u2',
-      { from_name: emailName, to_name: 'Shanka', message: emailMessage, reply_to: emailAddress },
+      { from_name: emailName, to_name: 'Shanka', message: `[${topic}] ${emailMessage}`, reply_to: emailAddress, topic },
       'PMbuGmUBbitnn0i_o'
     )
       .then(() => {
@@ -176,7 +214,7 @@ function App() {
 
       <StoryCanvas projectImages={PROJECT_IMAGES} />
 
-      <Header active={active} sections={{ intro: introRef, work: workRef, contact: contactRef }} />
+      <Header active={active} sections={{ intro: introRef, work: workRef, resume: resumeRef, contact: contactRef }} />
 
       <aside className="side-label" aria-hidden="true">
         Shanka — Little Rock, AR
@@ -187,12 +225,12 @@ function App() {
         <section ref={introRef} id="intro" className="hero" data-stage="hero">
           <div className="hero__desk" aria-hidden="true" />
           <div className="hero__lockup">
-            <p className="tagline rv">Full-stack web developer — Little Rock, AR</p>
+            <p className="tagline rv">Full-stack software engineer — Little Rock, AR</p>
             <h1 className="wordmark rv">Shanka</h1>
           </div>
           <p className="hero__intro body-copy rv">
-            Hi, I'm Shamarl. I build web apps at AI speed — and check every line like a developer, because I am
-            one.
+            Hi, I'm Shamarl. I build web apps for teams and clients at AI speed — and check every line like an
+            engineer, because I am one.
           </p>
           <div className="hero__card rv">
             <h2 className="label-lg">Designed and built by Shamarl Leonard.</h2>
@@ -286,22 +324,98 @@ function App() {
           </div>
         </section>
 
-        {/* 7 — Contact: the laptop returns, half-closed */}
+        {/* 7 — Résumé path for hiring teams: the laptop shows a CV */}
+        <section ref={resumeRef} id="resume" className="beat experience" data-stage="experience">
+          <div className="experience__main">
+            <span className="credit rv">02 / Résumé</span>
+            <h2 className="heading rv">For hiring teams.</h2>
+            <p className="body-copy rv">
+              Full-stack software engineer working across React, Angular and Spring Boot — with AI integration and
+              test-driven habits built in.
+            </p>
+            <div className="experience__actions rv">
+              <a className="btn-pill" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+                Download résumé (PDF)
+              </a>
+              <a className="text-link" href="https://www.linkedin.com/in/shamarl-l-a70864118" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a className="text-link" href="https://github.com/Shanka26" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+
+            <h3 className="label-sm muted rv">Experience</h3>
+            <ol className="timeline">
+              {EXPERIENCE.map((job) => (
+                <li key={job.role + job.org} className="timeline__item rv">
+                  <span className="label-sm muted timeline__when">{job.when}</span>
+                  <div className="timeline__body">
+                    <h4 className="label-lg">
+                      {job.role} <span className="credit">· {job.org}</span>
+                    </h4>
+                    <ul className="timeline__points">
+                      {job.points.map((pt) => (
+                        <li key={pt}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <h3 className="label-sm muted rv">Education</h3>
+            <ol className="timeline">
+              {EDUCATION.map((ed) => (
+                <li key={ed.what} className="timeline__item rv">
+                  <span className="label-sm muted timeline__when">{ed.when}</span>
+                  <div className="timeline__body">
+                    <h4 className="label-lg">{ed.what}</h4>
+                    <p className="card-body muted">{ed.where}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <h3 className="label-sm muted rv">Skills</h3>
+            <dl className="skills rv">
+              {SKILLS.map((s) => (
+                <div key={s.group} className="skills__row">
+                  <dt className="label-sm">{s.group}</dt>
+                  <dd>{s.items.join(' · ')}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* 8 — Contact: the laptop returns, half-closed */}
         <section ref={contactRef} id="contact" className="beat contact" data-stage="contact">
           <div className="contact__main">
-            <span className="credit rv">02 / Contact</span>
+            <span className="credit rv">03 / Contact</span>
             <h2 className="mega mega--left rv">
               If I can build this,
               <br />
-              imagine what we can build for you.
+              imagine what we can build together.
             </h2>
-            <button
-              type="button"
-              className="btn-pill rv"
-              onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-            >
-              Start a project
-            </button>
+            <div className="contact__doors rv">
+              <button
+                type="button"
+                className="btn-pill"
+                onClick={() => {
+                  setTopic('Project')
+                  formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }}
+              >
+                Start a project
+              </button>
+              <button
+                type="button"
+                className="btn-ghost"
+                onClick={() => {
+                  setTopic('Job opportunity')
+                  formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }}
+              >
+                Hiring? Let's talk
+              </button>
+            </div>
           </div>
         </section>
 
@@ -309,7 +423,7 @@ function App() {
           <h2 className="heading rv">Send a message.</h2>
           <div className="contact__form-wrap">
             <p className="body-copy rv">
-              Have a project, a question, or an idea that needs building? Send me a message and I'll get back to
+              Have a project, a role, or an idea that needs building? Send me a message and I'll get back to
               you.
             </p>
             <form
@@ -320,6 +434,15 @@ function App() {
                 sendEmail()
               }}
             >
+              <fieldset className="topic">
+                <legend className="label-sm">I'm reaching out about</legend>
+                {['Project', 'Job opportunity', 'Something else'].map((t) => (
+                  <label key={t} className={`topic__opt ${topic === t ? 'is-on' : ''}`}>
+                    <input type="radio" name="topic" value={t} checked={topic === t} onChange={() => setTopic(t)} />
+                    {t}
+                  </label>
+                ))}
+              </fieldset>
               <label className="field">
                 <span className="label-sm">Your name</span>
                 <input value={emailName} onChange={(e) => setEmailName(e.target.value)} autoComplete="name" />

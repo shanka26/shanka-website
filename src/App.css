@@ -456,7 +456,60 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
 }
 .card__quote { margin: 0; font-size: 24px; line-height: 1.15; font-weight: 500; }
 
-/* 7 · Contact */
+/* 7 · Résumé / Experience (laptop on the right showing a CV) */
+.experience { padding-top: 120px; padding-bottom: 120px; }
+.experience__main { display: flex; flex-direction: column; gap: var(--gap); max-width: 640px; }
+.experience__main > h3 { margin: 31px 0 0; }
+.experience__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.experience__actions .btn-pill { text-decoration: none; }
+
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px dashed var(--color-line); }
+.timeline__item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--gap);
+  padding: 24px 0;
+  border-bottom: 1px dashed var(--color-line);
+}
+.timeline__when { padding-top: 3px; }
+.timeline__body { display: flex; flex-direction: column; gap: 12px; }
+.timeline__body .label-lg { line-height: 1.2; }
+.timeline__body .credit { font-size: 14px; }
+.timeline__points { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+.timeline__points li { font-size: 15px; line-height: 1.45; }
+.timeline__points li::marker { color: var(--color-accent); }
+
+.skills { margin: 0; border-top: 1px dashed var(--color-line); }
+.skills__row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--gap);
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--color-line);
+}
+.skills__row dt { color: var(--color-muted); }
+.skills__row dd { margin: 0; font-size: 15px; line-height: 1.45; }
+
+/* 8 · Contact */
+.contact__doors { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+.contact__doors .btn-ghost { padding: 13px 22px; }
+
+.topic { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.topic legend { margin-bottom: 12px; padding: 0; }
+.topic__opt {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line);
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+.topic__opt input { position: absolute; opacity: 0; pointer-events: none; }
+.topic__opt.is-on { border-color: var(--color-text); background: var(--color-surface); }
+.topic__opt:focus-within { outline: 1px dashed var(--color-text); outline-offset: 3px; }
+
 .contact {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -544,6 +597,8 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   .cards__grid { grid-template-columns: 1fr; }
   .card { min-height: 260px; }
 
+  .experience { padding-top: 80px; padding-bottom: 80px; }
+  .timeline__item, .skills__row { grid-template-columns: 1fr; gap: 8px; }
   .contact { grid-template-columns: 1fr; align-content: end; }
   .contact-form-section { grid-template-columns: 1fr; row-gap: 31px; padding: 41px var(--gutter) 80px; }
   .contact__form-wrap, .contact-form-section .heading { grid-column: 1; }

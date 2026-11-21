@@ -27,6 +27,10 @@ export const STAGES = {
     x: 0.55, y: 1.6, rx: 0.5, ry: -0.9, rz: 0.2, lid: 1.2, scale: 0.6, screen: 'code', glow: 0,
     m: { x: 0 },
   },
+  experience: {
+    x: 0.52, y: 0.05, rx: 0.2, ry: -0.5, rz: 0, lid: 1.85, scale: 0.75, screen: 'resume',
+    m: { x: 0.6, y: 1.6, scale: 0.5 }, // on phones the timeline needs the full screen
+  },
   contact: {
     x: 0.5, y: 0.0, rx: 0.42, ry: -0.95, rz: 0.06, lid: 1.05, scale: 0.8, screen: 'logo',
     m: { x: 0, y: 0.4, scale: 0.55 },
