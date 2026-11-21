@@ -33,7 +33,29 @@ function makeCanvasScreen(kind) {
   ctx.fillStyle = C.canvas
   ctx.fillRect(0, 0, w, h)
 
-  if (kind === 'logo') {
+  if (kind === 'resume') {
+    // A stylised CV page
+    ctx.fillStyle = '#e0e0e0'
+    ctx.fillRect(330, 40, 620, h - 40)
+    ctx.fillStyle = C.teal
+    ctx.font = '600 44px Inter, Arial, sans-serif'
+    ctx.fillText('Shamarl Leonard', 380, 120)
+    ctx.fillStyle = C.surface
+    ctx.font = '500 20px Inter, Arial, sans-serif'
+    ctx.fillText('FULL-STACK SOFTWARE ENGINEER', 380, 156)
+    ctx.fillStyle = C.surface
+    ctx.fillRect(380, 180, 520, 4)
+    const sections = [220, 400, 560]
+    sections.forEach((y, si) => {
+      ctx.fillStyle = C.teal
+      ctx.fillRect(380, y, 150, 18)
+      const lines = si === 0 ? 4 : 3
+      for (let l = 0; l < lines; l++) {
+        ctx.fillStyle = '#9a9a9a'
+        ctx.fillRect(400, y + 40 + l * 30, 380 + ((l * 53 + si * 31) % 120), 12)
+      }
+    })
+  } else if (kind === 'logo') {
     const g = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w * 0.6)
     g.addColorStop(0, 'rgba(0,122,121,0.55)')
     g.addColorStop(1, 'rgba(30,30,30,0)')
@@ -258,7 +280,7 @@ export default class LaptopScene {
   }
 
   _buildScreens(projectImages) {
-    this.screens = { logo: makeCanvasScreen('logo'), code: makeCanvasScreen('code') }
+    this.screens = { logo: makeCanvasScreen('logo'), code: makeCanvasScreen('code'), resume: makeCanvasScreen('resume') }
     const loader = new THREE.TextureLoader()
     projectImages.forEach((src, i) => {
       const tex = loader.load(src, (t) => this._cover(t))

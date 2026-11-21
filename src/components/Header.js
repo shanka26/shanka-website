@@ -13,6 +13,7 @@ const Header = ({ active, sections }) => {
   const items = [
     { key: 'intro', label: 'Intro' },
     { key: 'work', label: 'Work' },
+    { key: 'resume', label: 'Résumé' },
     { key: 'blog', label: 'Blog', href: BLOG_URL },
     { key: 'contact', label: 'Contact' },
   ]
