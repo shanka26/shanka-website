@@ -69,19 +69,19 @@ const PROJECT_IMAGES = PROJECTS.map((p) => p.image)
 const CARDS = [
   {
     tone: 'teal',
-    title: 'Based in the British Virgin Islands',
-    big: 'BVI',
-    body: 'Working remotely with clients wherever they are — island time zone, mainland turnaround.',
+    title: 'From the BVI. Based in Little Rock.',
+    big: 'AR',
+    body: 'Island roots, Arkansas home base. Working with clients anywhere, on Central Time.',
   },
   {
-    title: 'The stack',
-    list: ['React', 'Django', 'Node', 'Stripe', 'AI tooling'],
-    body: 'Front end, back end, payments and AI integrations — one person from sketch to deploy.',
+    title: 'What I build with',
+    list: ['AI coding agents', 'React', 'Django', 'Stripe', 'Vercel'],
+    body: 'AI handles the speed. I write, read and review the code it touches — so what ships is fast and holds up.',
   },
   {
-    title: 'Always a student',
-    quote: '“A true master is an eternal student.”',
-    body: 'Learning new technologies is the part of the job I never want to finish.',
+    title: 'Quality, by hand',
+    quote: '“Fast is easy now. Right still takes a developer.”',
+    body: 'Every project gets a human code review, testing across screen sizes, and a final pass on the details before it goes live.',
   },
 ]
 
@@ -179,7 +179,7 @@ function App() {
       <Header active={active} sections={{ intro: introRef, work: workRef, contact: contactRef }} />
 
       <aside className="side-label" aria-hidden="true">
-        Shanka — Full-stack developer
+        Shanka — Little Rock, AR
       </aside>
 
       <main>
@@ -187,17 +187,17 @@ function App() {
         <section ref={introRef} id="intro" className="hero" data-stage="hero">
           <div className="hero__desk" aria-hidden="true" />
           <div className="hero__lockup">
-            <p className="tagline rv">Responsive web apps, built to last.</p>
+            <p className="tagline rv">Full-stack web developer — Little Rock, AR</p>
             <h1 className="wordmark rv">Shanka</h1>
           </div>
           <p className="hero__intro body-copy rv">
-            Hi, I'm Shamarl — a full-stack web developer. I design and build responsive web applications that
-            feel considered.
+            Hi, I'm Shamarl. I build web apps at AI speed — and check every line like a developer, because I am
+            one.
           </p>
           <div className="hero__card rv">
             <h2 className="label-lg">Designed and built by Shamarl Leonard.</h2>
             <hr className="dashed" />
-            <p className="card-body">From the British Virgin Islands, building for the web everywhere.</p>
+            <p className="card-body">Born in the British Virgin Islands. Building from Little Rock, Arkansas.</p>
           </div>
           <span className="scroll-cue label-sm">
             <span className="scroll-cue__dot" /> Scroll to continue
@@ -211,7 +211,8 @@ function App() {
             <br />a portfolio.
           </h2>
           <p className="body-copy reveal__right rv">
-            It's a record of what I've built — web apps taken from the first sketch to the final deploy.
+            It's proof of process: ideas taken from first sketch to shipped product, with every step checked by
+            hand.
           </p>
           <span className="legal reveal__foot">* Scroll slowly. It's more fun.</span>
         </section>
@@ -220,23 +221,23 @@ function App() {
         <section className="beat built" data-stage="built">
           <div className="built__head">
             <h2 className="mega rv">
-              Built with code<sup>*</sup>
+              Built with AI<sup>*</sup>
             </h2>
             <span className="credit rv">Shanka-1</span>
           </div>
           <p className="built__side label-sm rv">
-            Front end, back end,
+            Reviewed by a human.
             <br />
-            and everything in between.
+            Tested before it ships.
           </p>
-          <span className="legal built__foot">* And a lot of coffee.</span>
+          <span className="legal built__foot">* And checked line by line by someone who can actually code.</span>
         </section>
 
         {/* 4 — Pinned glowing word + project strip */}
         <section className="word" data-stage="word" data-progress>
           <div className="word__pin">
-            <span className="label-lg word__kicker">So versatile,</span>
-            <h2 className="word__big">it's full-stack</h2>
+            <span className="label-lg word__kicker">Built AI-fast,</span>
+            <h2 className="word__big">hand-checked</h2>
             <div className="word__strip" aria-hidden="true">
               {PROJECTS.map((p) => (
                 <img key={p.title} src={p.image} alt="" />
@@ -253,6 +254,7 @@ function App() {
           <header className="section-intro">
             <span className="credit rv">01 / Work</span>
             <h2 className="heading rv">Selected work.</h2>
+            <p className="card-body muted rv">Client sites and products I've designed, built and shipped.</p>
           </header>
           {PROJECTS.map((project, i) => (
             <Project key={project.title} index={i} total={PROJECTS.length} {...project} />
@@ -307,7 +309,8 @@ function App() {
           <h2 className="heading rv">Send a message.</h2>
           <div className="contact__form-wrap">
             <p className="body-copy rv">
-              Want to talk about work, ask a question, or keep up with what I'm building? Send me a message.
+              Have a project, a question, or an idea that needs building? Send me a message and I'll get back to
+              you.
             </p>
             <form
               ref={formRef}

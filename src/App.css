@@ -330,6 +330,7 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
 .word { position: relative; height: 320vh; }
 .word__pin {
   position: sticky;
+  z-index: 2; /* sticky makes a stacking context; lift it so the word sits in front of the laptop */
   top: 0;
   height: 100vh;
   height: 100svh;
