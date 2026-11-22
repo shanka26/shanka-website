@@ -3,11 +3,10 @@ import { send } from '@emailjs/browser'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Project from './components/Project'
+import BehindTheBuild from './components/BehindTheBuild'
 import StoryCanvas from './story/StoryCanvas'
 import useReveal from './useReveal'
 import pomonotoScreen from './res/pomonotoMock.webp'
-import dcoreScreen from './res/dcoreMock.webp'
-import cubeplexScreen from './res/cubeplex_mock.jpg'
 import guidedlyScreen from './res/guidedlyMock.jpg'
 import aiTradingJournalScreen from './res/tradeDropScreen.png'
 import unwineScreen from './res/unwine_screenshot.png'
@@ -43,27 +42,9 @@ const PROJECTS = [
     link: 'https://pomonoto.netlify.app/',
     description: 'A Pomodoro timer whose notes vanish while you work and return on your break.',
   },
-  {
-    title: 'Cubeplex',
-    image: cubeplexScreen,
-    tags: ['React', 'E-commerce', 'Stripe'],
-    link: 'https://cubeplex.netlify.app/',
-    badge: 'Checkout disabled',
-    description: 'A full storefront, from product pages to Stripe checkout.',
-  },
-  {
-    title: "D'Core Paperie",
-    image: dcoreScreen,
-    tags: ['React', 'Client work'],
-    link: 'https://dcore.netlify.app/',
-    description: 'A clean showcase site for a local paperie.',
-  },
 ]
 
 const PROJECT_IMAGES = PROJECTS.map((p) => p.image)
-
-// Tools shown in the "What I build with" orbit (AI last, on purpose)
-const TOOLS = ['React', 'Next.js', 'Angular', 'Spring Boot', 'Django', 'AI tools']
 
 function App() {
   const introRef = useRef(null)
@@ -155,11 +136,6 @@ function App() {
           <p className="hero__intro body-copy rv">
             Hi, I'm Shamarl, though most people call me Shanka. I build for the web, for teams and clients.
           </p>
-          <div className="hero__card rv">
-            <h2 className="label-lg">Designed and built by Shamarl Leonard.</h2>
-            <hr className="dashed" />
-            <p className="card-body">Scroll to see how.</p>
-          </div>
           <span className="scroll-cue label-sm">
             <span className="scroll-cue__dot" /> Scroll to continue
           </span>
@@ -208,48 +184,7 @@ function App() {
         {/* 6 — Light section: the laptop steps aside */}
         <section className="cards" data-stage="away">
           <h2 className="heading rv">Behind the build.</h2>
-          <div className="cards__grid">
-            {/* Roots: a dashed route from the BVI to Little Rock */}
-            <article className="card card--teal rv">
-              <h3 className="label-lg">BVI-born.<br />Little Rock-based.</h3>
-              <svg className="route" viewBox="0 0 300 190" aria-hidden="true">
-                <path className="route__path" d="M250 160 C 230 70, 120 40, 60 52" />
-                <circle className="route__dot route__dot--from" cx="250" cy="160" r="6" />
-                <circle className="route__dot" cx="60" cy="52" r="7" />
-                <circle className="route__pulse" cx="60" cy="52" r="7" />
-                <text x="250" y="184" textAnchor="middle">BVI</text>
-                <text x="60" y="30" textAnchor="middle">Little Rock</text>
-              </svg>
-              <p className="card-body">Working with clients anywhere, on Central Time.</p>
-            </article>
-
-            {/* Tools: code first, AI in orbit */}
-            <article className="card rv" style={{ transitionDelay: '90ms' }}>
-              <h3 className="label-lg">What I build with</h3>
-              <div className="orbit" aria-label="React, Next.js, Angular, Spring Boot, Django, and AI tools">
-                <span className="orbit__ring" aria-hidden="true" />
-                {TOOLS.map((t, i) => (
-                  <span key={t} className={`orbit__pill ${t === 'AI tools' ? 'orbit__pill--ai' : ''}`} style={{ '--i': i }}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <p className="card-body">Code first. AI where it helps.</p>
-            </article>
-
-            {/* Quality: a mini code review */}
-            <article className="card card--dark rv" style={{ transitionDelay: '180ms' }}>
-              <h3 className="label-lg">Quality, by hand</h3>
-              <div className="review" aria-hidden="true">
-                <span className="review__line review__line--del" style={{ '--w': '72%' }} />
-                <span className="review__line review__line--add" style={{ '--w': '86%' }} />
-                <span className="review__line" style={{ '--w': '58%' }} />
-                <span className="review__line review__line--add" style={{ '--w': '64%' }} />
-                <span className="review__badge">✓ Reviewed</span>
-              </div>
-              <p className="card__quote">“Fast is easy now. Right still takes a developer.”</p>
-            </article>
-          </div>
+          <BehindTheBuild />
         </section>
 
         {/* 8 — Contact: the laptop returns, half-closed */}

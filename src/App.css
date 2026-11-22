@@ -439,7 +439,27 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
 .card--teal { background: var(--color-cta); color: var(--color-text); }
 .card--dark { background: var(--color-canvas); color: var(--color-text); }
 
-/* Card visuals */
+/* Card visuals + micro-interactions */
+
+/* Pointer tilt with a soft light that follows the cursor */
+.card--tilt.is-in {
+  transform: perspective(900px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
+  transition: opacity 900ms var(--ease-out), filter 900ms var(--ease-out), transform 250ms ease-out;
+}
+.card--tilt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  background: radial-gradient(400px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.14), transparent 45%);
+}
+.card--tilt:hover::before { opacity: 1; }
+.card--tilt:focus-visible { outline-offset: -6px; }
+
+/* Roots: route + flying dot + live clock */
+.card--teal { cursor: pointer; }
 .route { width: 100%; height: auto; flex: 1; min-height: 140px; overflow: visible; }
 .route text { fill: var(--color-text); font: 500 12px var(--font); text-transform: uppercase; }
 .route__path {
@@ -450,29 +470,74 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   stroke-dashoffset: 300;
   transition: stroke-dashoffset 1600ms var(--ease-out) 300ms;
 }
-.card.is-in .route__path { stroke-dashoffset: 0; }
+.card.is-in .route__path { stroke-dashoffset: 0; animation: dash-flow 6s linear 2s infinite; }
+@keyframes dash-flow { to { stroke-dashoffset: -120; } }
 .route__dot { fill: var(--color-text); }
 .route__dot--from { fill: none; stroke: var(--color-text); stroke-width: 1.5; }
 .route__pulse { fill: none; stroke: var(--color-bright); transform-origin: 60px 52px; animation: pulse 2.4s ease-out infinite; }
 @keyframes pulse { from { transform: scale(1); opacity: 0.9; } to { transform: scale(3.2); opacity: 0; } }
+.route__plane circle { fill: var(--color-bright); filter: drop-shadow(0 0 6px rgba(158, 238, 238, 0.9)); }
+.route__plane { opacity: 0; transition: opacity 200ms ease; }
+.route__plane.is-on { opacity: 1; }
+.route__clock { display: inline-flex; align-items: center; gap: 8px; }
+.route__live { width: 7px; height: 7px; border-radius: 50%; background: var(--color-bright); animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: 0.25; } }
 
-.orbit { position: relative; flex: 1; min-height: 200px; display: grid; place-items: center; }
+/* Tools: slow orbit, hover/tap a pill to read it */
+.orbit { position: relative; flex: 1; min-height: 230px; display: grid; place-items: center; }
 .orbit__ring {
   position: absolute;
-  width: 170px;
-  height: 170px;
+  width: 184px;
+  height: 184px;
   border-radius: 50%;
   border: 1px dashed rgba(30, 30, 30, 0.35);
 }
-.orbit__ring::after {
-  content: '';
+.orbit__center {
   position: absolute;
-  inset: 42px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   background: var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+  padding: 10px;
+  box-sizing: border-box;
 }
+.orbit__name { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+.orbit__note { font-size: 10px; line-height: 1.25; color: #bdbdbd; }
+.orbit__name, .orbit__note { animation: swap-in 350ms var(--ease-out); }
+.orbit__spin {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  animation: spin 40s linear infinite;
+}
+.orbit:hover .orbit__spin, .orbit:focus-within .orbit__spin { animation-play-state: paused; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-back { to { transform: rotate(-360deg); } }
 .orbit__pill {
   position: absolute;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  --a: calc(var(--i) * 60deg - 90deg);
+  transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(0.6);
+  opacity: 0;
+  transition: transform 900ms var(--ease-out), opacity 600ms ease;
+  transition-delay: calc(var(--i) * 70ms + 250ms);
+  background: none;
+  padding: 0;
+}
+.card.is-in .orbit__pill { transform: rotate(var(--a)) translateX(100px) rotate(calc(-1 * var(--a))) scale(1); opacity: 1; }
+/* inner label counter-rotates so text stays upright while the ring spins */
+.orbit__pill span {
+  display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
@@ -481,16 +546,15 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   border-radius: 9999px;
   background: var(--color-surface);
   color: var(--color-text);
-  /* place pills around the ring; they settle in when the card reveals */
-  --a: calc(var(--i) * 60deg - 90deg);
-  transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(0.6);
-  opacity: 0;
-  transition: transform 900ms var(--ease-out), opacity 600ms ease;
-  transition-delay: calc(var(--i) * 70ms + 250ms);
+  animation: spin-back 40s linear infinite;
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
 }
-.card.is-in .orbit__pill { transform: rotate(var(--a)) translateX(92px) rotate(calc(-1 * var(--a))) scale(1); opacity: 1; }
-.orbit__pill--ai { background: var(--color-cta); }
+.orbit:hover .orbit__pill span, .orbit:focus-within .orbit__pill span { animation-play-state: paused; }
+.orbit__pill--ai span { background: var(--color-cta); }
+.orbit__pill.is-on span { box-shadow: 0 0 0 2px var(--color-canvas), 0 0 0 3px var(--color-cta); }
+.orbit__pill:hover span { scale: 1.08; }
 
+/* Quality: replayable code review */
 .review {
   position: relative;
   flex: 1;
@@ -504,15 +568,50 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   background: var(--color-surface);
 }
 .review__line {
+  position: relative;
   height: 10px;
   width: 0;
   border-radius: 3px;
   background: rgba(224, 224, 224, 0.25);
-  transition: width 900ms var(--ease-out) 300ms;
 }
-.card.is-in .review__line { width: var(--w); }
+.card.is-in .review__line { animation: grow 800ms var(--ease-out) forwards; animation-delay: calc(var(--d) + 300ms); }
+@keyframes grow { to { width: var(--w); } }
 .review__line--add { background: rgba(68, 189, 187, 0.55); }
-.review__line--del { background: rgba(122, 122, 122, 0.5); }
+/* the "bug" line gets flagged, struck through, then fades */
+.review__line--bug { background: rgba(122, 122, 122, 0.5); }
+.card.is-in .review__line--bug {
+  animation: grow 800ms var(--ease-out) forwards, flag 600ms ease 1300ms forwards;
+}
+.review__line--bug::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 2px;
+  width: 0;
+  background: #e0e0e0;
+}
+.card.is-in .review__line--bug::after { animation: strike 400ms ease 1500ms forwards; }
+@keyframes flag { to { background: rgba(200, 90, 90, 0.55); opacity: 0.45; } }
+@keyframes strike { to { width: 100%; } }
+/* the fix slides in after */
+.review__line--fix { background: rgba(68, 189, 187, 0.75); }
+.card.is-in .review__line--fix { animation: grow 700ms var(--ease-out) 1900ms forwards; }
+.review__cursor {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  width: 2px;
+  height: 14px;
+  background: var(--color-bright);
+  opacity: 0;
+}
+.card.is-in .review__cursor { animation: cursor-move 2.2s ease-in-out 300ms forwards, blink 1s step-end 2.5s infinite; }
+@keyframes cursor-move {
+  0% { opacity: 1; transform: translate(0, 0); }
+  50% { opacity: 1; transform: translate(150px, 0); }
+  100% { opacity: 1; transform: translate(180px, 22px); }
+}
 .review__badge {
   position: absolute;
   right: 12px;
@@ -525,10 +624,19 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   background: var(--color-cta);
   color: var(--color-text);
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 500ms ease 1100ms, transform 500ms var(--ease-out) 1100ms;
+  transform: translateY(6px) scale(0.9);
 }
-.card.is-in .review__badge { opacity: 1; transform: none; }
+.card.is-in .review__badge { animation: pop 450ms var(--ease-out) 2700ms forwards; }
+@keyframes pop { 60% { opacity: 1; transform: translateY(-2px) scale(1.06); } to { opacity: 1; transform: none; } }
+.review__foot { display: flex; flex-direction: column; gap: 14px; margin-top: auto; }
+.review__run { align-self: flex-start; }
+
+@keyframes swap-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit__spin, .orbit__pill span, .route__live, .route__pulse { animation: none !important; }
+  .card.is-in .route__path { animation: none; }
+}
 .card__big {
   position: absolute;
   left: 14px;
