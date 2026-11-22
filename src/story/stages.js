@@ -15,10 +15,6 @@ export const STAGES = {
     x: 0, y: -0.02, rx: 0.32, ry: -0.62, rz: 0.04, lid: 1.9, scale: 1.0, screen: 'logo',
     m: { y: 0.02, scale: 0.85 },
   },
-  built: {
-    x: 0, y: -0.2, rx: 0.12, ry: 0, rz: 0, lid: 1.82, scale: 0.95, screen: 'code',
-    m: { y: -0.05, scale: 0.9 },
-  },
   word: {
     x: 0, y: 0.02, rx: 0.75, ry: 0.55, rz: 0.25, lid: 1.35, scale: 0.62, screen: 'code', glow: 1,
     m: { scale: 0.55 },
@@ -26,10 +22,6 @@ export const STAGES = {
   away: {
     x: 0.55, y: 1.6, rx: 0.5, ry: -0.9, rz: 0.2, lid: 1.2, scale: 0.6, screen: 'code', glow: 0,
     m: { x: 0 },
-  },
-  experience: {
-    x: 0.52, y: 0.05, rx: 0.2, ry: -0.5, rz: 0, lid: 1.85, scale: 0.75, screen: 'resume',
-    m: { x: 0.6, y: 1.6, scale: 0.5 }, // on phones the timeline needs the full screen
   },
   contact: {
     x: 0.5, y: 0.0, rx: 0.42, ry: -0.95, rz: 0.06, lid: 1.05, scale: 0.8, screen: 'logo',

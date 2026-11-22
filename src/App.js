@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Project from './components/Project'
 import StoryCanvas from './story/StoryCanvas'
+import useReveal from './useReveal'
 import pomonotoScreen from './res/pomonotoMock.webp'
 import dcoreScreen from './res/dcoreMock.webp'
 import cubeplexScreen from './res/cubeplex_mock.jpg'
@@ -61,71 +62,12 @@ const PROJECTS = [
 
 const PROJECT_IMAGES = PROJECTS.map((p) => p.image)
 
-const RESUME_URL = `${process.env.PUBLIC_URL}/Shamarl_Leonard_Resume.pdf`
-
-// From the résumé — keep in sync with public/Shamarl_Leonard_Resume.pdf
-const EXPERIENCE = [
-  {
-    when: 'Jun 2023 — Present',
-    role: 'Full-stack Software Engineer',
-    org: "Dillard's",
-    points: [
-      '300% faster file processing on critical apps.',
-      '~50% less setup time on a rebuilt allocation system, with AI-driven inventory decisions.',
-      'Faster SQL through indexing. Test-driven development.',
-    ],
-  },
-  {
-    when: '2022 — Present',
-    role: 'Web Developer',
-    org: 'Independent',
-    points: ['Client sites and products. See Work.'],
-  },
-]
-
-const EDUCATION = [
-  { when: '2023', what: 'B.S. Computer Science', where: 'University of Central Arkansas' },
-  { when: '2020', what: "Associate's, Computer Studies", where: 'H. Lavity Stoutt Community College, BVI' },
-]
-
-// Short on purpose: the full list lives in the PDF.
-const SKILLS = [
-  { group: 'Frontend', items: ['React', 'Next.js', 'Angular'] },
-  { group: 'Backend', items: ['Spring Boot', 'Django', 'SQL', 'MongoDB'] },
-  { group: 'Quality', items: ['TDD', 'JUnit', 'Cypress'] },
-  { group: 'AI', items: ['OpenAI', 'Lovable', 'v0'] },
-]
-
 // Tools shown in the "What I build with" orbit (AI last, on purpose)
 const TOOLS = ['React', 'Next.js', 'Angular', 'Spring Boot', 'Django', 'AI tools']
-
-// Fade/slide text in as it enters the viewport.
-function useReveal() {
-  useEffect(() => {
-    const els = document.querySelectorAll('.rv')
-    if (!('IntersectionObserver' in window)) {
-      els.forEach((el) => el.classList.add('is-in'))
-      return undefined
-    }
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-in')
-            io.unobserve(e.target)
-          }
-        }),
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
-    )
-    els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-}
 
 function App() {
   const introRef = useRef(null)
   const workRef = useRef(null)
-  const resumeRef = useRef(null)
   const contactRef = useRef(null)
   const [topic, setTopic] = useState('Project')
   const formRef = useRef(null)
@@ -138,11 +80,18 @@ function App() {
 
   useReveal()
 
+  // Arriving from the résumé page with /#work or /#contact: jump to that section.
+  useEffect(() => {
+    const id = window.location.hash.slice(1)
+    if (!id) return undefined
+    const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 400)
+    return () => clearTimeout(t)
+  }, [])
+
   useEffect(() => {
     const sections = [
       ['intro', introRef],
       ['work', workRef],
-      ['resume', resumeRef],
       ['contact', contactRef],
     ]
     const observer = new IntersectionObserver(
@@ -193,7 +142,7 @@ function App() {
 
       <StoryCanvas projectImages={PROJECT_IMAGES} />
 
-      <Header active={active} sections={{ intro: introRef, work: workRef, resume: resumeRef, contact: contactRef }} />
+      <Header active={active} sections={{ intro: introRef, work: workRef, contact: contactRef }} />
 
       <main>
         {/* 1 — Hero: the laptop lies closed on the desk */}
@@ -228,21 +177,6 @@ function App() {
             <br />
             product.
           </p>
-        </section>
-
-        {/* 3 — Headline over the open laptop */}
-        <section className="beat built" data-stage="built">
-          <div className="built__head">
-            <h2 className="mega rv">
-              Built with code<sup>*</sup>
-            </h2>
-          </div>
-          <p className="built__side label-sm rv">
-            Clean. Tested.
-            <br />
-            Reviewed line by line.
-          </p>
-          <span className="legal built__foot">* And the right AI tools.</span>
         </section>
 
         {/* 4 — Pinned glowing word + project strip */}
@@ -315,63 +249,6 @@ function App() {
               </div>
               <p className="card__quote">“Fast is easy now. Right still takes a developer.”</p>
             </article>
-          </div>
-        </section>
-
-        {/* 7 — Résumé path for hiring teams: the laptop shows a CV */}
-        <section ref={resumeRef} id="resume" className="beat experience" data-stage="experience">
-          <div className="experience__main">
-            <h2 className="heading rv">For hiring teams.</h2>
-            <p className="body-copy rv">Full-stack engineer at Dillard's since 2023.</p>
-            <div className="experience__actions rv">
-              <a className="btn-pill" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
-                Download résumé (PDF)
-              </a>
-              <a className="text-link" href="https://www.linkedin.com/in/shamarl-l-a70864118" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a className="text-link" href="https://github.com/Shanka26" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </div>
-
-            <h3 className="label-sm muted rv">Experience</h3>
-            <ol className="timeline">
-              {EXPERIENCE.map((job) => (
-                <li key={job.role + job.org} className="timeline__item rv">
-                  <span className="label-sm muted timeline__when">{job.when}</span>
-                  <div className="timeline__body">
-                    <h4 className="label-lg">
-                      {job.role} <span className="credit">· {job.org}</span>
-                    </h4>
-                    <ul className="timeline__points">
-                      {job.points.map((pt) => (
-                        <li key={pt}>{pt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <h3 className="label-sm muted rv">Education</h3>
-            <ol className="timeline">
-              {EDUCATION.map((ed) => (
-                <li key={ed.what} className="timeline__item rv">
-                  <span className="label-sm muted timeline__when">{ed.when}</span>
-                  <div className="timeline__body">
-                    <h4 className="label-lg">{ed.what}</h4>
-                    <p className="card-body muted">{ed.where}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <h3 className="label-sm muted rv">Skills</h3>
-            <dl className="skills rv">
-              {SKILLS.map((s) => (
-                <div key={s.group} className="skills__row">
-                  <dt className="label-sm">{s.group}</dt>
-                  <dd>{s.items.join(' · ')}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </section>
 
