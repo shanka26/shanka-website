@@ -65,10 +65,11 @@ function makeCanvasScreen(kind) {
     ctx.font = '500 150px Inter, Arial, sans-serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText('SHANKA', w / 2, h / 2 - 10)
+    ctx.fillText('SHANKA', w / 2, h / 2 - 60)
+    ctx.font = '500 34px Inter, Arial, sans-serif'
+    ctx.fillText('FULL-STACK DEVELOPER BY DAY', w / 2, h / 2 + 60)
     ctx.fillStyle = C.tealLight
-    ctx.font = '500 30px Inter, Arial, sans-serif'
-    ctx.fillText('FULL-STACK WEB DEVELOPER', w / 2, h / 2 + 100)
+    ctx.fillText('AI BUILDER BY NIGHT', w / 2, h / 2 + 112)
   } else {
     // A stylised editor: line numbers + syntax-coloured bars
     ctx.fillStyle = '#262626'

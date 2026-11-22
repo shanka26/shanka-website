@@ -8,7 +8,7 @@ const PI = Math.PI
 
 export const STAGES = {
   hero: {
-    x: -0.04, y: -0.1, rx: PI / 2 - 0.32, ry: 0.18, rz: -0.38, lid: 0, scale: 0.85, screen: 'logo', glow: 0,
+    x: -0.26, y: -0.1, rx: PI / 2 - 0.32, ry: 0.18, rz: -0.38, lid: 0, scale: 0.78, screen: 'logo', glow: 0,
     m: { x: 0, y: 0.0, scale: 0.68 },
   },
   reveal: {

@@ -390,7 +390,7 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
 .no-webgl .project__fallback { display: block; }
 
 .badge {
-  margin-left: 12px;
+  margin-left: 0;
   padding: 4px 10px;
   border-radius: 9999px;
   border: 1px solid var(--color-text);
@@ -435,6 +435,98 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
 }
 .card .card-body { margin-top: auto; position: relative; }
 .card--teal { background: var(--color-cta); color: var(--color-text); }
+.card--dark { background: var(--color-canvas); color: var(--color-text); }
+
+/* Card visuals */
+.route { width: 100%; height: auto; flex: 1; min-height: 140px; overflow: visible; }
+.route text { fill: var(--color-text); font: 500 12px var(--font); text-transform: uppercase; }
+.route__path {
+  fill: none;
+  stroke: var(--color-bright);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 7;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 1600ms var(--ease-out) 300ms;
+}
+.card.is-in .route__path { stroke-dashoffset: 0; }
+.route__dot { fill: var(--color-text); }
+.route__dot--from { fill: none; stroke: var(--color-text); stroke-width: 1.5; }
+.route__pulse { fill: none; stroke: var(--color-bright); transform-origin: 60px 52px; animation: pulse 2.4s ease-out infinite; }
+@keyframes pulse { from { transform: scale(1); opacity: 0.9; } to { transform: scale(3.2); opacity: 0; } }
+
+.orbit { position: relative; flex: 1; min-height: 200px; display: grid; place-items: center; }
+.orbit__ring {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 1px dashed rgba(30, 30, 30, 0.35);
+}
+.orbit__ring::after {
+  content: '';
+  position: absolute;
+  inset: 42px;
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+.orbit__pill {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  /* place pills around the ring; they settle in when the card reveals */
+  --a: calc(var(--i) * 60deg - 90deg);
+  transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(0.6);
+  opacity: 0;
+  transition: transform 900ms var(--ease-out), opacity 600ms ease;
+  transition-delay: calc(var(--i) * 70ms + 250ms);
+}
+.card.is-in .orbit__pill { transform: rotate(var(--a)) translateX(92px) rotate(calc(-1 * var(--a))) scale(1); opacity: 1; }
+.orbit__pill--ai { background: var(--color-cta); }
+
+.review {
+  position: relative;
+  flex: 1;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+.review__line {
+  height: 10px;
+  width: 0;
+  border-radius: 3px;
+  background: rgba(224, 224, 224, 0.25);
+  transition: width 900ms var(--ease-out) 300ms;
+}
+.card.is-in .review__line { width: var(--w); }
+.review__line--add { background: rgba(68, 189, 187, 0.55); }
+.review__line--del { background: rgba(122, 122, 122, 0.5); }
+.review__badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: var(--color-cta);
+  color: var(--color-text);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 500ms ease 1100ms, transform 500ms var(--ease-out) 1100ms;
+}
+.card.is-in .review__badge { opacity: 1; transform: none; }
 .card__big {
   position: absolute;
   left: 14px;
