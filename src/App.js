@@ -79,7 +79,7 @@ const EXPERIENCE = [
     when: '2022 — Present',
     role: 'Web Developer',
     org: 'Independent',
-    points: ['Client sites and products — see Work.'],
+    points: ['Client sites and products. See Work.'],
   },
 ]
 
@@ -96,23 +96,8 @@ const SKILLS = [
   { group: 'AI', items: ['OpenAI', 'Lovable', 'v0'] },
 ]
 
-const CARDS = [
-  {
-    tone: 'teal',
-    title: 'BVI-born. Little Rock-based.',
-    big: 'AR',
-    body: 'Working with clients anywhere, on Central Time.',
-  },
-  {
-    title: 'What I build with',
-    list: ['AI coding agents', 'React', 'Next.js', 'Angular', 'Spring Boot'],
-    body: 'AI for speed. My own code review for quality.',
-  },
-  {
-    title: 'Quality, by hand',
-    quote: '“Fast is easy now. Right still takes a developer.”',
-  },
-]
+// Tools shown in the "What I build with" orbit (AI last, on purpose)
+const TOOLS = ['React', 'Next.js', 'Angular', 'Spring Boot', 'Django', 'AI tools']
 
 // Fade/slide text in as it enters the viewport.
 function useReveal() {
@@ -210,19 +195,17 @@ function App() {
 
       <Header active={active} sections={{ intro: introRef, work: workRef, resume: resumeRef, contact: contactRef }} />
 
-      <aside className="side-label" aria-hidden="true">
-        Shanka — Little Rock, AR
-      </aside>
-
       <main>
         {/* 1 — Hero: the laptop lies closed on the desk */}
         <section ref={introRef} id="intro" className="hero" data-stage="hero">
           <div className="hero__desk" aria-hidden="true" />
           <div className="hero__lockup">
-            <p className="tagline rv">Full-stack software engineer — Little Rock, AR</p>
+            <p className="tagline rv">Full-stack software engineer · Little Rock, AR</p>
             <h1 className="wordmark rv">Shanka</h1>
           </div>
-          <p className="hero__intro body-copy rv">Hi, I'm Shamarl. I build web apps for teams and clients.</p>
+          <p className="hero__intro body-copy rv">
+            Hi, I'm Shamarl, though most people call me Shanka. I build for the web, for teams and clients.
+          </p>
           <div className="hero__card rv">
             <h2 className="label-lg">Designed and built by Shamarl Leonard.</h2>
             <hr className="dashed" />
@@ -236,11 +219,14 @@ function App() {
         {/* 2 — The lid opens */}
         <section className="beat reveal" data-stage="reveal">
           <h2 className="heading reveal__left rv">
-            Isn't just
-            <br />a portfolio.
+            From first
+            <br />
+            sketch
           </h2>
-          <p className="body-copy reveal__right rv">
-            It's proof of process — from first sketch to shipped product.
+          <p className="heading reveal__right rv">
+            to shipped
+            <br />
+            product.
           </p>
         </section>
 
@@ -248,21 +234,21 @@ function App() {
         <section className="beat built" data-stage="built">
           <div className="built__head">
             <h2 className="mega rv">
-              Built with AI<sup>*</sup>
+              Built with code<sup>*</sup>
             </h2>
           </div>
           <p className="built__side label-sm rv">
-            Reviewed by a human.
+            Clean. Tested.
             <br />
-            Tested before it ships.
+            Reviewed line by line.
           </p>
-          <span className="legal built__foot">* Not by AI alone.</span>
+          <span className="legal built__foot">* And the right AI tools.</span>
         </section>
 
         {/* 4 — Pinned glowing word + project strip */}
         <section className="word" data-stage="word" data-progress>
           <div className="word__pin">
-            <span className="label-lg word__kicker">Built AI-fast,</span>
+            <span className="label-lg word__kicker">Built fast,</span>
             <h2 className="word__big">hand-checked</h2>
             <div className="word__strip" aria-hidden="true">
               {PROJECTS.map((p) => (
@@ -278,7 +264,6 @@ function App() {
         {/* 5 — One beat per project; the laptop screen shows each one */}
         <div ref={workRef} id="work">
           <header className="section-intro">
-            <span className="credit rv">01 / Work</span>
             <h2 className="heading rv">Selected work.</h2>
           </header>
           {PROJECTS.map((project, i) => (
@@ -290,28 +275,52 @@ function App() {
         <section className="cards" data-stage="away">
           <h2 className="heading rv">Behind the build.</h2>
           <div className="cards__grid">
-            {CARDS.map((c, i) => (
-              <article key={c.title} className={`card ${c.tone === 'teal' ? 'card--teal' : ''} rv`} style={{ transitionDelay: `${i * 90}ms` }}>
-                <h3 className="label-lg">{c.title}</h3>
-                {c.big && <span className="card__big">{c.big}</span>}
-                {c.list && (
-                  <ul className="card__pills">
-                    {c.list.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                )}
-                {c.quote && <p className="card__quote">{c.quote}</p>}
-                {c.body && <p className="card-body">{c.body}</p>}
-              </article>
-            ))}
+            {/* Roots: a dashed route from the BVI to Little Rock */}
+            <article className="card card--teal rv">
+              <h3 className="label-lg">BVI-born.<br />Little Rock-based.</h3>
+              <svg className="route" viewBox="0 0 300 190" aria-hidden="true">
+                <path className="route__path" d="M250 160 C 230 70, 120 40, 60 52" />
+                <circle className="route__dot route__dot--from" cx="250" cy="160" r="6" />
+                <circle className="route__dot" cx="60" cy="52" r="7" />
+                <circle className="route__pulse" cx="60" cy="52" r="7" />
+                <text x="250" y="184" textAnchor="middle">BVI</text>
+                <text x="60" y="30" textAnchor="middle">Little Rock</text>
+              </svg>
+              <p className="card-body">Working with clients anywhere, on Central Time.</p>
+            </article>
+
+            {/* Tools: code first, AI in orbit */}
+            <article className="card rv" style={{ transitionDelay: '90ms' }}>
+              <h3 className="label-lg">What I build with</h3>
+              <div className="orbit" aria-label="React, Next.js, Angular, Spring Boot, Django, and AI tools">
+                <span className="orbit__ring" aria-hidden="true" />
+                {TOOLS.map((t, i) => (
+                  <span key={t} className={`orbit__pill ${t === 'AI tools' ? 'orbit__pill--ai' : ''}`} style={{ '--i': i }}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <p className="card-body">Code first. AI where it helps.</p>
+            </article>
+
+            {/* Quality: a mini code review */}
+            <article className="card card--dark rv" style={{ transitionDelay: '180ms' }}>
+              <h3 className="label-lg">Quality, by hand</h3>
+              <div className="review" aria-hidden="true">
+                <span className="review__line review__line--del" style={{ '--w': '72%' }} />
+                <span className="review__line review__line--add" style={{ '--w': '86%' }} />
+                <span className="review__line" style={{ '--w': '58%' }} />
+                <span className="review__line review__line--add" style={{ '--w': '64%' }} />
+                <span className="review__badge">✓ Reviewed</span>
+              </div>
+              <p className="card__quote">“Fast is easy now. Right still takes a developer.”</p>
+            </article>
           </div>
         </section>
 
         {/* 7 — Résumé path for hiring teams: the laptop shows a CV */}
         <section ref={resumeRef} id="resume" className="beat experience" data-stage="experience">
           <div className="experience__main">
-            <span className="credit rv">02 / Résumé</span>
             <h2 className="heading rv">For hiring teams.</h2>
             <p className="body-copy rv">Full-stack engineer at Dillard's since 2023.</p>
             <div className="experience__actions rv">
@@ -369,37 +378,14 @@ function App() {
         {/* 8 — Contact: the laptop returns, half-closed */}
         <section ref={contactRef} id="contact" className="beat contact" data-stage="contact">
           <div className="contact__main">
-            <span className="credit rv">03 / Contact</span>
             <h2 className="mega mega--left rv">
               Imagine what we can build together.
             </h2>
-            <div className="contact__doors rv">
-              <button
-                type="button"
-                className="btn-pill"
-                onClick={() => {
-                  setTopic('Project')
-                  formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                }}
-              >
-                Start a project
-              </button>
-              <button
-                type="button"
-                className="btn-ghost"
-                onClick={() => {
-                  setTopic('Job opportunity')
-                  formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                }}
-              >
-                Hiring? Let's talk
-              </button>
-            </div>
           </div>
         </section>
 
         <section className="contact-form-section">
-          <h2 className="heading rv">Send a message.</h2>
+          <h2 className="heading rv">Let's get to work.</h2>
           <div className="contact__form-wrap">
             <form
               ref={formRef}
