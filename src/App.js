@@ -10,9 +10,17 @@ import pomonotoScreen from './res/pomonotoMock.webp'
 import guidedlyScreen from './res/guidedlyMock.jpg'
 import aiTradingJournalScreen from './res/tradeDropScreen.png'
 import unwineScreen from './res/unwine_screenshot.png'
+import freeCurrentScreen from './res/freeCurrentScreen.jpg'
 import './App.css'
 
 const PROJECTS = [
+  {
+    title: 'Free Current',
+    image: freeCurrentScreen,
+    tags: ['React', 'Supabase', 'Studio'],
+    badges: ['Co-founder', 'Launching soon'],
+    description: 'A boutique studio crafting cinematic websites for identity-driven brands.',
+  },
   {
     title: 'TradeDrop',
     image: aiTradingJournalScreen,
