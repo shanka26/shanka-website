@@ -399,6 +399,8 @@ hr.dashed { border: 0; border-top: 1px dashed var(--color-line); margin: 0; widt
   color: var(--color-text);
 }
 
+.badges { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.badge--strong { background: var(--color-cta); border-color: var(--color-cta); }
 .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--color-muted); }
 
 .cert-line {

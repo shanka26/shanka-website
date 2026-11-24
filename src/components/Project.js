@@ -2,14 +2,17 @@ import React from 'react'
 
 // One story beat per project. The persistent laptop shows the screenshot;
 // the <img> here is only a fallback for devices without WebGL.
-const Project = ({ title, description, image, tags, link, badge, index }) => {
+const Project = ({ title, description, image, tags, link, badge, badges, index }) => {
   const side = index % 2 === 0 ? 'left' : 'right'
+  const labels = badges || (badge ? [badge] : [])
   return (
     <section className={`beat project project--${side}`} data-stage={`project-${index}`}>
       <div className="project__text">
-        {badge && (
-          <span className="label-sm rv">
-            <span className="badge">{badge}</span>
+        {labels.length > 0 && (
+          <span className="label-sm badges rv">
+            {labels.map((b, i) => (
+              <span key={b} className={`badge ${i === 0 && badges ? 'badge--strong' : ''}`}>{b}</span>
+            ))}
           </span>
         )}
         <h3 className="heading rv">{title}.</h3>
